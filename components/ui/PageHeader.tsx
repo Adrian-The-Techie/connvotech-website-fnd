@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'react-router-dom'; // Wait, this is Next.js. I should use next/link or just handle it as a prop.
-// Actually, I'll use standard Next.js Link if I need it, but for a header, I'll just take props.
+import Link from 'next/link';
 
 interface PageHeaderProps {
   badge: string;
@@ -34,7 +33,7 @@ export default function PageHeader({
           transition={{ duration: 0.6 }}
         >
           {withBackLink ? (
-             <a 
+             <Link 
                href={backLinkHref}
                className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-text-gray hover:text-brand-blue transition-all mb-10 group"
              >
@@ -42,7 +41,7 @@ export default function PageHeader({
                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                </div>
                {backLinkLabel}
-             </a>
+             </Link>
           ) : (
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/5 border border-brand-blue/10 text-brand-blue text-[10px] font-black uppercase tracking-widest mb-6">
               {badge}
