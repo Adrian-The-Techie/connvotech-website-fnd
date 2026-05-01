@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 11, 11, 13;   /* brand-black */
+  --background-rgb: 255, 255, 255; /* brand-white */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #2F80ED, #56CCF2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Global Form Fix for Corporate White */
+select, input, textarea {
+  color: #0B0B0D !important;
+  background-color: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px;
+}
+
+select option {
+  background-color: #FFFFFF !important;
+  color: #0B0B0D !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #94A3B8 !important; /* slate-400 */
+}
+
+/* Global Table Fix */
+table {
+  color: #0B0B0D !important;
+  background: #FFFFFF;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th {
+  color: #64748B !important; /* slate-500 */
+  background: #F8FAFC;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+}
+
+td {
+  color: #1E293B !important; /* slate-800 */
+  border-bottom: 1px solid #F1F5F9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.premium-shadow {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+}
+
+.premium-card-shadow {
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+
+
+
