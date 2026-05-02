@@ -33,7 +33,7 @@ export default function HeroSection({ headline, subheadline }: HeroProps) {
               <span>Leading ICT Consultancy in Nairobi</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-brand-black leading-[1.1] mb-8 tracking-tighter">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-brand-black leading-[1.1] mb-8 tracking-tighter">
               {headline ? (
                 headline.split(' ').map((word, i) => (
                   <span key={i} className={word.toLowerCase() === 'bespoke' || word.toLowerCase() === 'growing' ? "text-gradient" : ""}>

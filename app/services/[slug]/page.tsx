@@ -48,12 +48,12 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
            <div className="w-24 h-24 bg-white border border-border-gray rounded-3xl flex items-center justify-center text-brand-blue shadow-premium-card">
               <Icon size={44} />
            </div>
-           <h1 className="text-5xl md:text-8xl font-display font-black text-brand-black tracking-tighter leading-[0.9]">
+           <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-brand-black tracking-tighter leading-[0.9]">
               {service.title}
            </h1>
         </div>
 
-        <p className="text-2xl md:text-3xl text-brand-black font-display font-black leading-[1.2] mb-20 border-l-8 border-brand-blue pl-10 max-w-4xl tracking-tight">
+        <p className="text-xl md:text-2xl text-brand-black font-display font-black leading-[1.2] mb-20 border-l-8 border-brand-blue pl-10 max-w-4xl tracking-tight">
            {service.short_description}
         </p>
 
@@ -68,7 +68,7 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
         <div className="bg-brand-bg rounded-[64px] p-12 md:p-24 border border-border-gray flex flex-col lg:flex-row justify-between items-center gap-16 shadow-premium-card relative overflow-hidden">
            <div className="absolute bottom-0 right-0 w-64 h-64 bg-brand-blue/5 blur-[80px] rounded-full"></div>
            <div className="max-w-2xl text-center lg:text-left relative z-10">
-              <h2 className="text-4xl md:text-6xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[1.1]">Start your project with <span className="text-gradient">Connvotech</span></h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[1.1]">Start your project with <span className="text-gradient">Connvotech</span></h2>
               <p className="text-text-gray text-xl font-medium">
                  Let&apos;s discuss how our {service.title} expertise can help transform your business and drive digital excellence.
               </p>

@@ -61,7 +61,7 @@ export default async function ServicesPage() {
            <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
            <div className="relative z-10 flex flex-col lg:row justify-between items-center gap-10">
               <div className="max-w-2xl text-center lg:text-left">
-                 <h2 className="text-4xl md:text-6xl font-display font-black mb-6 tracking-tighter">Not sure what you need?</h2>
+                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black mb-6 tracking-tighter">Not sure what you need?</h2>
                  <p className="text-white/80 text-xl leading-relaxed font-medium">
                     Our consultants are ready to audit your current infrastructure and recommend 
                     the best path forward for your business.

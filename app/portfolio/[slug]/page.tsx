@@ -53,7 +53,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
             </div>
             Back to Portfolio
           </Link>
-          <h1 className="text-5xl md:text-7xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[0.9]">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[0.9]">
             {project.title}
           </h1>
           <div className="flex flex-wrap justify-center gap-3">
@@ -85,7 +85,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
             </div>
 
             <div className="prose prose-xl prose-slate max-w-none">
-              <h2 className="text-4xl font-display font-black text-brand-black mb-10 tracking-tighter">Project Overview</h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black mb-10 tracking-tighter">Project Overview</h2>
               <div 
                 className="text-text-gray font-medium leading-[1.8]"
                 dangerouslySetInnerHTML={{ __html: project.long_description }} 

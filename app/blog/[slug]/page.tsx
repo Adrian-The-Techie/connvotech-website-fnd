@@ -36,7 +36,7 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
     return (
       <div className="pt-40 pb-24 text-center">
         <h1 className="text-4xl font-display font-bold mb-4">Post Not Found</h1>
-        <Link href="/insights" className="text-brand-blue font-bold">Back to Insights</Link>
+        <Link href="/blog" className="text-brand-blue font-bold">Back to Insights</Link>
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
       />
       {/* Header */}
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-12">
-        <Link href="/insights" className="inline-flex items-center text-gray-500 hover:text-brand-blue mb-8 transition-colors">
+        <Link href="/blog" className="inline-flex items-center text-gray-500 hover:text-brand-blue mb-8 transition-colors">
           <ArrowLeft size={18} className="mr-2" />
           Back to Insights
         </Link>
@@ -77,7 +77,7 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
              {post.category}
            </span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-brand-black leading-tight mb-8">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-brand-black leading-tight mb-8">
           {post.title}
         </h1>
         <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 border-b border-gray-100 pb-8">

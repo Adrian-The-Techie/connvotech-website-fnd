@@ -49,7 +49,7 @@ export default function PrivacyPage() {
         <div className="prose prose-xl prose-slate max-w-none">
           {sections.map((section, index) => (
             <div key={index} className="mb-16">
-              <h2 className="text-3xl font-display font-black text-brand-black mb-6 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-display font-black text-brand-black mb-6 tracking-tight">
                 {section.title}
               </h2>
               <p className="text-text-gray font-medium leading-relaxed">

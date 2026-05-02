@@ -65,7 +65,7 @@ export default async function ProductsPage() {
                    <p className="text-[10px] font-black text-brand-blue uppercase tracking-[0.3em]">
                       {product.tagline}
                    </p>
-                   <h2 className="text-4xl md:text-6xl font-display font-black text-brand-black leading-[0.9] tracking-tighter">
+                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black leading-[0.9] tracking-tighter">
                       {product.name}
                    </h2>
                 </div>
@@ -109,7 +109,7 @@ export default async function ProductsPage() {
         <div className="mt-40 p-12 md:p-24 rounded-[64px] bg-brand-bg border border-border-gray text-center relative overflow-hidden shadow-premium-card">
            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue/5 blur-[120px] rounded-full"></div>
            <div className="relative z-10">
-              <h2 className="text-4xl md:text-7xl font-display font-black mb-8 leading-[0.9] tracking-tighter text-brand-black">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black mb-8 leading-[0.9] tracking-tighter text-brand-black">
                 Ready to build something <span className="text-gradient">Custom?</span>
               </h2>
               <p className="text-text-gray text-xl max-w-2xl mx-auto mb-12 font-medium">

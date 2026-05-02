@@ -50,11 +50,13 @@ export default api;
 export const getSiteSettings = () => api.get('/site-settings/').then(res => res.data);
 export const getServices = () => api.get('/services/').then(res => res.data);
 export const getServiceBySlug = (slug: string) => api.get(`/services/${slug}/`).then(res => res.data);
+export const getSectors = () => api.get('/sectors/').then(res => res.data);
+export const getSectorBySlug = (slug: string) => api.get(`/sectors/${slug}/`).then(res => res.data);
 export const getPortfolio = (tagSlug?: string) => 
   api.get(`/portfolio/${tagSlug ? `?tags__slug=${tagSlug}` : ''}`).then(res => res.data);
 export const getProjectBySlug = (slug: string) => api.get(`/portfolio/${slug}/`).then(res => res.data);
-export const getBlogPosts = (category?: string) => 
-  api.get(`/blog/${category ? `?category=${category}` : ''}`).then(res => res.data);
+export const getBlogPosts = (params?: any) => 
+  api.get('/blog/', { params }).then(res => res.data);
 export const getBlogPostBySlug = (slug: string) => api.get(`/blog/${slug}/`).then(res => res.data);
 export const getTestimonials = () => api.get('/testimonials/').then(res => res.data);
 export const getProducts = () => api.get('/products/').then(res => res.data);

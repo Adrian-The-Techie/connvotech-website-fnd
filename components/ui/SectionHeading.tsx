@@ -41,7 +41,7 @@ export default function SectionHeading({
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
         className={cn(
-          "text-3xl md:text-4xl font-display font-bold leading-tight mb-6",
+          "text-2xl md:text-3xl font-display font-bold leading-tight mb-6",
           "text-brand-black"
         )}
       >

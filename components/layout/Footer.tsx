@@ -7,43 +7,36 @@ import { getSiteSettings } from '@/lib/api';
 import { SiteSettings } from '@/lib/types';
 import { getMediaUrl } from '@/lib/utils';
 
-const footerLinks = [
-  { 
-    title: "Quick Links", 
-    links: [
-      { name: "Services", href: "/services" },
-      { name: "Portfolio", href: "/portfolio" },
-      { name: "Blog", href: "/blog" },
-      { name: "Contact", href: "/contact" },
-    ] 
-  },
-  { 
-    title: "Services", 
-    links: [
-      { name: "Web Development", href: "/services/web-development" },
-      { name: "System Development", href: "/services/system-development" },
-      { name: "UI/UX Design", href: "/services/ui-ux-design" },
-      { name: "Cloud Infrastructure", href: "/services/cloud-infrastructure" },
-    ] 
-  }
-];
-
 export default function Footer() {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [services, setServices] = useState<any[]>([]);
+  const [sectors, setSectors] = useState<any[]>([]);
 
   useEffect(() => {
-    getSiteSettings().then(setSettings).catch(console.error);
+    import('@/lib/api').then(api => {
+      api.getSiteSettings().then(setSettings).catch(console.error);
+      api.getServices().then(data => setServices((data.results || data).slice(0, 5))).catch(console.error);
+      api.getSectors().then(data => setSectors((data.results || data).slice(0, 5))).catch(console.error);
+    });
   }, []);
+
+  const navigationLinks = [
+    { name: "Our Services", href: "/services" },
+    { name: "Project Portfolio", href: "/portfolio" },
+    { name: "Innovation News", href: "/news" },
+    { name: "Expert Insights", href: "/blog" },
+    { name: "Digital Products", href: "/products" },
+  ];
 
   const companyName = settings?.company_name || "Connvotech Solutions";
   const address = settings?.address || "Nairobi, Kenya";
   const email = settings?.email || "info@connvotech.com";
-  const phone = settings?.phone || "+254 700 000000";
+  const phone = settings?.phone || "+254 700 221171";
 
   return (
     <footer className="bg-brand-bg text-brand-black pt-20 pb-10 border-t border-border-gray">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12 mb-16">
           {/* Brand Col */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center space-x-2">
@@ -87,21 +80,55 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links Cols */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h4 className="font-display font-black text-lg mb-8 text-brand-black uppercase tracking-tight">{section.title}</h4>
-              <ul className="space-y-4">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className="text-text-gray hover:text-brand-blue transition-colors font-medium">
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Navigation Col */}
+          <div>
+            <h4 className="font-display font-black text-lg mb-8 text-brand-black uppercase tracking-tight">Navigation</h4>
+            <ul className="space-y-4">
+              {navigationLinks.map((link) => (
+                <li key={link.name}>
+                  <Link href={link.href} className="text-text-gray hover:text-brand-blue transition-colors font-medium">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services Col */}
+          <div>
+            <h4 className="font-display font-black text-lg mb-8 text-brand-black uppercase tracking-tight">Our Expertise</h4>
+            <ul className="space-y-4">
+              {services.map((service) => (
+                <li key={service.id}>
+                  <Link href={`/services/${service.slug}`} className="text-text-gray hover:text-brand-blue transition-colors font-medium">
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
+              {services.length === 0 && (
+                <li className="text-text-gray/50 italic text-sm">Loading solutions...</li>
+              )}
+            </ul>
+          </div>
+
+          {/* Sectors Col */}
+          <div>
+            <h4 className="font-display font-black text-lg mb-8 text-brand-black uppercase tracking-tight">Strategic Sectors</h4>
+            <ul className="space-y-4">
+              {sectors.map((sector) => (
+                <li key={sector.id}>
+                  <Link href={`/sectors/${sector.slug}`} className="text-text-gray hover:text-brand-blue transition-colors font-medium">
+                    {sector.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/sectors" className="text-brand-blue font-bold text-xs uppercase tracking-widest hover:underline mt-4 inline-block">
+                  View All Sectors
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           {/* Contact Col */}
           <div>

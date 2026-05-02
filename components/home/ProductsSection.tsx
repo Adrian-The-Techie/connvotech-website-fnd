@@ -37,7 +37,7 @@ export default function ProductsSection() {
               <Zap size={14} className="animate-pulse" />
               Our Ecosystem
             </div>
-            <h2 className="text-3xl md:text-5xl font-display font-black text-brand-black leading-tight tracking-tighter">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black leading-tight tracking-tighter">
               Enterprise <span className="text-gradient">Digital Products</span>
             </h2>
           </div>

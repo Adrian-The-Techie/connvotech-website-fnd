@@ -37,7 +37,7 @@ export default function InsightsSection({ posts, hideHeading = false }: Insights
 
         <div className="mt-20 text-center">
           <Link 
-            href="/insights" 
+            href="/blog" 
             className="group inline-flex items-center gap-4 bg-primary-gradient text-white px-12 py-5 rounded-2xl font-bold transition-all duration-300 shadow-premium-soft hover:shadow-glow hover:-translate-y-1"
           >
             Explore All Case Studies
@@ -93,7 +93,7 @@ function InsightCard({ post, index }: { post: BlogPost; index: number }) {
           )}
         </div>
 
-        <h3 className="text-2xl font-display font-black text-brand-black mb-6 group-hover:text-brand-blue transition-colors leading-[1.1] tracking-tight line-clamp-2">
+        <h3 className="text-xl md:text-2xl font-display font-black text-brand-black mb-6 group-hover:text-brand-blue transition-colors leading-[1.1] tracking-tight line-clamp-2">
           {post.title}
         </h3>
         
@@ -118,7 +118,7 @@ function InsightCard({ post, index }: { post: BlogPost; index: number }) {
         </div>
 
         <Link 
-          href={`/insights/${post.slug}`}
+          href={`/blog/${post.slug}`}
           className="inline-flex items-center gap-3 text-brand-blue font-black text-[10px] uppercase tracking-widest group/btn bg-brand-blue/5 px-6 py-3 rounded-full self-start hover:bg-brand-blue hover:text-white transition-all duration-300 border border-brand-blue/10"
         >
           View Case Study

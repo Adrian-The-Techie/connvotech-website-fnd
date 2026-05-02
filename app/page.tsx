@@ -7,6 +7,7 @@ import TestimonialsSection from '../components/home/TestimonialsSection';
 import InsightsSection from '../components/home/InsightsSection';
 import ContactSection from '../components/home/ContactSection';
 import ProductsSection from '../components/home/ProductsSection';
+import SectorsSection from '../components/home/SectorsSection';
 import {
   getSiteSettings,
   getServices,
@@ -71,6 +72,7 @@ export default async function HomePage() {
         industries={siteSettings.stat_industries}
       />
       <ServicesSection services={services?.results || services || []} />
+      <SectorsSection />
       <ProductsSection />
       <PortfolioSection projects={portfolio?.results || []} />
       <TestimonialsSection testimonials={testimonials?.results || testimonials || []} />
