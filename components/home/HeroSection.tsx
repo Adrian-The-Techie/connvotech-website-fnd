@@ -34,11 +34,13 @@ export default function HeroSection({ headline, subheadline }: HeroProps) {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-black text-brand-black leading-[0.9] mb-8 tracking-tighter">
-              {headline?.split(' ').map((word, i) => (
-                <span key={i} className={word.toLowerCase() === 'bespoke' || word.toLowerCase() === 'growing' ? "text-gradient" : ""}>
-                  {word}{' '}
-                </span>
-              )) || (
+              {headline ? (
+                headline.split(' ').map((word, i) => (
+                  <span key={i} className={word.toLowerCase() === 'bespoke' || word.toLowerCase() === 'growing' ? "text-gradient" : ""}>
+                    {word}{' '}
+                  </span>
+                ))
+              ) : (
                 <>
                   <span className="text-gradient">Bespoke</span> ICT Solutions for <span className="text-gradient">Growing</span> Enterprises
                 </>

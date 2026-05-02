@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Laptop } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn, getMediaUrl } from '@/lib/utils';
 import { getSiteSettings } from '@/lib/api';
 import { SiteSettings } from '@/lib/types';
 
@@ -49,7 +49,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center space-x-3 group">
           {settings?.logo ? (
             <div className="h-12 w-auto relative transform group-hover:scale-105 transition-transform duration-500">
-               <img src={settings.logo} alt={settings.company_name} className="h-full w-auto object-contain relative z-10" />
+               <img src={getMediaUrl(settings.logo)} alt={settings.company_name} className="h-full w-auto object-contain relative z-10" />
             </div>
           ) : (
             <>
@@ -119,7 +119,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "text-xl font-bold transition-colors",
+                    "text-lg font-bold transition-colors",
                     pathname === link.href ? "text-brand-blue" : "text-brand-black hover:text-brand-blue"
                   )}
                 >

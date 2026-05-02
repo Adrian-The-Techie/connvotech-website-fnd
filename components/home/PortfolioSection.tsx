@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 import { Project, Tag, SiteSettings } from '@/lib/types';
 import { getSiteSettings } from '@/lib/api';
+import { getMediaUrl } from '@/lib/utils';
 import SectionHeading from '../ui/SectionHeading';
 
 interface PortfolioSectionProps {
@@ -128,7 +129,7 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
         
         {project.thumbnail ? (
           <Image 
-            src={project.thumbnail} 
+            src={getMediaUrl(project.thumbnail)} 
             alt={project.title} 
             fill 
             className="object-cover group-hover:scale-110 transition-transform duration-1000" 
@@ -142,7 +143,7 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
           {displayLogo ? (
             <div className="relative w-full h-full flex items-center justify-center">
                <img 
-                 src={displayLogo} 
+                 src={getMediaUrl(displayLogo)} 
                  alt={project.title} 
                  className="max-w-[75%] max-h-[55%] object-contain drop-shadow-lg filter brightness-0 invert group-hover:scale-110 transition-all duration-700 ease-out opacity-90" 
                />

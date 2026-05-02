@@ -5,8 +5,9 @@ import api from '@/lib/api';
 import { BlogPost } from '@/lib/types';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Clock, ArrowRight, Newspaper } from 'lucide-react';
+import { Newspaper, Clock, ArrowRight } from 'lucide-react';
 import PageHeader from '@/components/ui/PageHeader';
+import { getMediaUrl } from '@/lib/utils';
 
 export default function NewsPage() {
   const [news, setNews] = useState<BlogPost[]>([]);
@@ -52,7 +53,7 @@ export default function NewsPage() {
                 {/* Thumbnail */}
                 <div className="relative h-48 overflow-hidden">
                   <img 
-                    src={item.external_image_url || item.cover_image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800'} 
+                    src={item.external_image_url && item.external_image_url.startsWith('http') ? item.external_image_url : getMediaUrl(item.cover_image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800')} 
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronRight, ExternalLink, Cpu, Shield, Zap, Check, ArrowRight } from 'lucide-react';
 import { getProducts } from '@/lib/api';
 import { Product } from '@/lib/types';
+import { getMediaUrl } from '@/lib/utils';
 
 export default function ProductsSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -61,12 +62,12 @@ export default function ProductsSection() {
             >
               <div className="relative h-64 rounded-[32px] overflow-hidden mb-8">
                 {product.image_url ? (
-                  <Image 
-                    src={product.image_url} 
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                    <Image 
+                      src={getMediaUrl(product.image_url)} 
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
                 ) : (
                    <div className="w-full h-full bg-soft-gray flex items-center justify-center">
                       <Cpu className="text-slate-300" size={48} />

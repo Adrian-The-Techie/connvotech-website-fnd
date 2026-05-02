@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
 import { Testimonial } from '@/lib/types';
+import { getMediaUrl } from '@/lib/utils';
 import SectionHeading from '../ui/SectionHeading';
 
 interface TestimonialsSectionProps {
@@ -97,7 +98,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               <div className="flex flex-col items-center">
                 {current.avatar && (
                   <div className="w-24 h-24 rounded-full relative overflow-hidden mb-6 border-2 border-brand-blue/20 p-1.5 shadow-premium-soft bg-white">
-                    <Image src={current.avatar} alt={current.client_name} fill className="object-cover rounded-full" />
+                    <Image src={getMediaUrl(current.avatar)} alt={current.client_name} fill className="object-cover rounded-full" />
                   </div>
                 )}
                 <h4 className="text-2xl font-display font-black text-brand-black tracking-tight">{current.client_name}</h4>

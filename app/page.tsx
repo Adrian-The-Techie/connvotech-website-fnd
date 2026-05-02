@@ -32,7 +32,11 @@ export default async function HomePage() {
       getBlogPosts()
     ]);
 
-    [siteSettings, services, portfolio, testimonials, blogPosts] = data;
+    let [rawSettings, services, portfolio, testimonials, blogPosts] = data;
+    siteSettings = Array.isArray(rawSettings) ? rawSettings[0] : rawSettings;
+    
+    // Ensure siteSettings is valid
+    if (!siteSettings) throw new Error("No site settings found");
   } catch (error) {
     console.error("Failed to fetch home page data", error);
     // Fallbacks if backend is not running

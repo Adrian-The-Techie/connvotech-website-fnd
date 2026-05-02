@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, User, ArrowRight, Target, CheckCircle2 } from 'lucide-react';
 import { BlogPost } from '@/lib/types';
+import { getMediaUrl } from '@/lib/utils';
 import SectionHeading from '../ui/SectionHeading';
 
 interface InsightsSectionProps {
@@ -64,7 +65,7 @@ function InsightCard({ post, index }: { post: BlogPost; index: number }) {
       <div className="relative h-72 rounded-[40px] overflow-hidden mb-8 shadow-premium-soft group-hover:shadow-premium-card transition-all duration-500 border border-border-gray p-2 bg-white">
         <div className="relative w-full h-full rounded-[32px] overflow-hidden">
           <Image 
-            src={post.external_image_url || post.cover_image || "/placeholder.jpg"} 
+            src={post.external_image_url && post.external_image_url.startsWith('http') ? post.external_image_url : getMediaUrl(post.cover_image || "/placeholder.jpg")} 
             alt={post.title} 
             fill 
             className="object-cover group-hover:scale-105 transition-transform duration-700" 

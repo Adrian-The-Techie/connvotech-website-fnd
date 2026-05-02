@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink, Calendar, Tag as TagIcon } from 'lucide-react'
 import { Metadata } from 'next';
 import { getProjectBySlug } from '@/lib/api';
 import { Project } from '@/lib/types';
+import { getMediaUrl } from '@/lib/utils';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const project: Project = await getProjectBySlug(params.slug).catch(() => null);
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: project.title,
       description: project.short_description,
-      images: project.thumbnail ? [project.thumbnail] : [],
+      images: project.thumbnail ? [getMediaUrl(project.thumbnail)] : [],
       type: 'website',
     },
   };
@@ -73,8 +74,8 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
             <div className="relative aspect-video rounded-[48px] overflow-hidden shadow-premium-card border border-border-gray group bg-white p-3">
                <div className="relative w-full h-full rounded-[36px] overflow-hidden">
                 {project.thumbnail && (
-                  <Image 
-                    src={project.thumbnail} 
+                   <Image 
+                    src={getMediaUrl(project.thumbnail)} 
                     alt={project.title} 
                     fill 
                     className="object-cover transition-transform duration-700 group-hover:scale-105" 

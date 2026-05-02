@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Laptop, Linkedin, Twitter, Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import { getSiteSettings } from '@/lib/api';
 import { SiteSettings } from '@/lib/types';
+import { getMediaUrl } from '@/lib/utils';
 
 const footerLinks = [
   { 
@@ -48,7 +49,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center space-x-2">
               {settings?.logo ? (
                 <div className="h-12 w-auto relative">
-                   <img src={settings.logo} alt={companyName} className="h-full w-auto object-contain" />
+                   <img src={getMediaUrl(settings.logo)} alt={companyName} className="h-full w-auto object-contain" />
                 </div>
               ) : (
                 <>
