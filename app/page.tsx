@@ -32,8 +32,12 @@ export default async function HomePage() {
       getBlogPosts()
     ]);
 
-    let [rawSettings, services, portfolio, testimonials, blogPosts] = data;
+    const [rawSettings, s, p, t, b] = data;
     siteSettings = Array.isArray(rawSettings) ? rawSettings[0] : rawSettings;
+    services = s;
+    portfolio = p;
+    testimonials = t;
+    blogPosts = b;
     
     // Ensure siteSettings is valid
     if (!siteSettings) throw new Error("No site settings found");
@@ -66,11 +70,11 @@ export default async function HomePage() {
         years={siteSettings.stat_years}
         industries={siteSettings.stat_industries}
       />
-      <ServicesSection services={services.results || services || []} />
+      <ServicesSection services={services?.results || services || []} />
       <ProductsSection />
-      <PortfolioSection projects={portfolio.results || []} />
-      <TestimonialsSection testimonials={testimonials.results || testimonials || []} />
-      <InsightsSection posts={blogPosts.results || []} />
+      <PortfolioSection projects={portfolio?.results || []} />
+      <TestimonialsSection testimonials={testimonials?.results || testimonials || []} />
+      <InsightsSection posts={blogPosts?.results || []} />
       <ContactSection />
     </div>
   );

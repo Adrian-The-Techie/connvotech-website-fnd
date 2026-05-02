@@ -13,7 +13,7 @@ export default async function PortfolioPage() {
         subtitle="A showcase of our recent projects across various industries, from retail to healthcare and finance."
       />
       <div className="pb-24">
-        <PortfolioSection projects={portfolioData.results} hideHeading={true} />
+        <PortfolioSection projects={portfolioData?.results || portfolioData || []} hideHeading={true} />
       </div>
     </main>
   );
