@@ -125,7 +125,7 @@ export default function AdminSectorsPage() {
             <p className="text-sm font-bold text-brand-blue uppercase tracking-widest mb-1">AI Behavior Tip</p>
             <p className="text-sm text-blue-700/80 leading-relaxed">
               When the News Crawler runs every hour, it will pick one of these sectors to bias its search. 
-              The AI Writer will then frame the "Challenge" and "Solution" specifically around this industry's unique needs.
+              The AI Writer will then frame the &quot;Challenge&quot; and &quot;Solution&quot; specifically around this industry&apos;s unique needs.
             </p>
          </div>
       </div>

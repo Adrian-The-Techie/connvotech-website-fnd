@@ -6,7 +6,7 @@ export default function ContactPage() {
     <main className="bg-white min-h-screen">
       <PageHeader 
         badge="Get In Touch"
-        title={<>Let's Build Something <span className="text-gradient">Great</span></>}
+        title={<>Let&apos;s Build Something <span className="text-gradient">Great</span></>}
         subtitle="Ready to transform your business scale? Reach out to us for a consultation and let's discuss your next big project."
       />
       <div className="pb-24">

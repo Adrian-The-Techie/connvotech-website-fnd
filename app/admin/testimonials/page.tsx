@@ -134,7 +134,7 @@ export default function AdminTestimonialsPage() {
                     <p className="text-xs text-gray-500">{item.client_role} at {item.client_company}</p>
                   </td>
                   <td className="px-8 py-4 max-w-xs">
-                    <p className="text-sm text-gray-600 line-clamp-2 italic italic">"{item.content}"</p>
+                    <p className="text-sm text-gray-600 line-clamp-2 italic italic">&quot;{item.content}&quot;</p>
                   </td>
                   <td className="px-8 py-4">
                     <div className="flex items-center gap-1 text-amber-500">

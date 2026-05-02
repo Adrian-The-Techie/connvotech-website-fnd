@@ -70,7 +70,7 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
            <div className="max-w-2xl text-center lg:text-left relative z-10">
               <h2 className="text-4xl md:text-6xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[1.1]">Start your project with <span className="text-gradient">Connvotech</span></h2>
               <p className="text-text-gray text-xl font-medium">
-                 Let's discuss how our {service.title} expertise can help transform your business and drive digital excellence.
+                 Let&apos;s discuss how our {service.title} expertise can help transform your business and drive digital excellence.
               </p>
            </div>
            <Link 

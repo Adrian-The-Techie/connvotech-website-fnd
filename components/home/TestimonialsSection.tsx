@@ -92,7 +92,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
               </div>
               
               <blockquote className="text-2xl md:text-4xl font-display font-black text-brand-black tracking-tight leading-[1.2] mb-12 max-w-4xl mx-auto">
-                "{current.body}"
+                &quot;{current.body}&quot;
               </blockquote>
 
               <div className="flex flex-col items-center">
