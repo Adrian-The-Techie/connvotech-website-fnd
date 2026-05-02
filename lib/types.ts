@@ -100,6 +100,19 @@ export interface Product {
   is_active: boolean;
 }
 
+export interface LeadInteraction {
+  id: string;
+  interaction_type: 'note' | 'email' | 'call' | 'status_change';
+  notes: string;
+  user: {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+  };
+  created_at: string;
+}
+
 export interface ContactSubmission {
   id: string;
   full_name: string;
@@ -109,6 +122,15 @@ export interface ContactSubmission {
   service_interest: string;
   message: string;
   is_read: boolean;
+  read_by?: {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+  };
+  read_at?: string;
+  lead_status: 'new' | 'potential' | 'hot' | 'cold' | 'closed';
+  interactions?: LeadInteraction[];
   submitted_at: string;
 }
 

@@ -62,5 +62,8 @@ export const submitContactForm = (data: any) => api.post('/contact/', data).then
 
 // Admin functions
 export const adminLogin = (data: any) => api.post('/auth/token/', data).then(res => res.data);
-export const getAdminSubmissions = () => api.get('/contact/submissions/').then(res => res.data);
-export const markSubmissionAsRead = (id: string) => api.patch(`/contact/submissions/${id}/`, { is_read: true });
+export const getAdminSubmissions = () => api.get('/contact/').then(res => res.data);
+export const getAdminSubmission = (id: string) => api.get(`/contact/${id}/`).then(res => res.data);
+export const markSubmissionAsRead = (id: string) => api.patch(`/contact/${id}/`, { is_read: true });
+export const updateLeadStatus = (id: string, status: string) => api.patch(`/contact/${id}/`, { lead_status: status });
+export const addLeadInteraction = (id: string, data: { interaction_type: string, notes: string }) => api.post(`/contact/${id}/add_interaction/`, data).then(res => res.data);

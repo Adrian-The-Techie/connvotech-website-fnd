@@ -68,7 +68,7 @@ function StatItem({ stat, index }: { stat: Stat; index: number }) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="text-center group"
     >
-      <div className="text-4xl md:text-6xl font-display font-black text-brand-black mb-3 group-hover:scale-105 transition-transform tracking-tighter">
+      <div className="text-3xl md:text-5xl font-display font-black text-brand-black mb-3 group-hover:scale-105 transition-transform tracking-tighter">
         {count}{stat.suffix}
       </div>
       <div className="text-text-gray text-[10px] uppercase tracking-[0.2em] font-black opacity-80">

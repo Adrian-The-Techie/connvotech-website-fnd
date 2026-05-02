@@ -91,7 +91,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                 ))}
               </div>
               
-              <blockquote className="text-2xl md:text-4xl font-display font-black text-brand-black tracking-tight leading-[1.2] mb-12 max-w-4xl mx-auto">
+              <blockquote className="text-2xl md:text-3xl font-display font-black text-brand-black tracking-tight leading-[1.2] mb-12 max-w-4xl mx-auto">
                 &quot;{current.body}&quot;
               </blockquote>
 

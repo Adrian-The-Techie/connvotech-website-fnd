@@ -22,6 +22,16 @@ interface Stats {
   published_news: number;
   unread_contacts: number;
   active_sectors: number;
+  total_leads: number;
+  hot_leads: number;
+  potential_leads: number;
+  closed_leads: number;
+  infrastructure: {
+    database: string;
+    storage: string;
+    ai_engine: string;
+    background_tasks: string;
+  };
 }
 
 export default function AdminDashboard() {
@@ -44,7 +54,7 @@ export default function AdminDashboard() {
 
   const cards = [
     { name: 'Solutions & Insights', value: stats?.insights || 0, icon: FileText, color: 'bg-blue-600', href: '/admin/insights' },
-    { name: 'News Drafts', value: stats?.news_drafts || 0, icon: Zap, color: 'bg-amber-500', href: '/admin/insights' },
+    { name: 'Hot Leads', value: stats?.hot_leads || 0, icon: Users, color: 'bg-rose-500', href: '/admin/contact' },
     { name: 'Active Sectors', value: stats?.active_sectors || 0, icon: Target, color: 'bg-brand-black', href: '/admin/sectors' },
     { name: 'Client Inquiries', value: stats?.unread_contacts || 0, icon: Mail, color: 'bg-green-600', href: '/admin/contact', unread: (stats?.unread_contacts || 0) > 0 },
   ];
@@ -133,12 +143,12 @@ export default function AdminDashboard() {
          <div className="bg-brand-black p-6 md:p-10 rounded-[30px] md:rounded-[40px] shadow-xl text-white relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-blue/20 rounded-full blur-3xl"></div>
             <h3 className="text-xl md:text-2xl font-display font-bold mb-6 md:mb-8 relative z-10">Infrastructure</h3>
-            <div className="space-y-6 md:space-y-8 relative z-10">
-               <StatusItem label="Database" status="Connected" />
-               <StatusItem label="Storage (S3)" status="Cloud" />
-               <StatusItem label="AI Engine" status="Gemini 1.5" />
-               <StatusItem label="Social API" status="LinkedIn" />
-            </div>
+             <div className="space-y-6 md:space-y-8 relative z-10">
+                <StatusItem label="Database" status={stats?.infrastructure.database || 'Connecting...'} />
+                <StatusItem label="Storage" status={stats?.infrastructure.storage || 'Checking...'} />
+                <StatusItem label="AI Engine" status={stats?.infrastructure.ai_engine || 'Gemini'} />
+                <StatusItem label="Workers" status={stats?.infrastructure.background_tasks || 'Offline'} />
+             </div>
             
             <div className="mt-8 md:mt-12 p-5 md:p-6 bg-white/5 rounded-2xl md:rounded-3xl border border-white/10">
                <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">System Load</p>

@@ -48,7 +48,7 @@ export default function PageHeader({
             </div>
           )}
           
-          <h1 className="text-5xl md:text-7xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[1.1]">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[1.1]">
             {title}
           </h1>
           <p className="text-xl text-text-gray max-w-3xl leading-relaxed font-medium">
