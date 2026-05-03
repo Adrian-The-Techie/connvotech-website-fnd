@@ -30,7 +30,7 @@ export default async function HomePage() {
       getServices(),
       getPortfolio(),
       getTestimonials(),
-      getBlogPosts()
+      getBlogPosts({ category: 'Insights', page_size: 10 }), // Fetch insights specifically
     ]);
 
     const [rawSettings, s, p, t, b] = data;
@@ -38,8 +38,7 @@ export default async function HomePage() {
     services = s;
     portfolio = p;
     testimonials = t;
-    // Filter out tech news from the insights section on home page
-    blogPosts = (b.results || b).filter((post: any) => post.category !== 'Tech News');
+    blogPosts = b.results || b;
     
     // Ensure siteSettings is valid
     if (!siteSettings) throw new Error("No site settings found");

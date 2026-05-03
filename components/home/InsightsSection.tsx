@@ -93,9 +93,23 @@ function InsightCard({ post, index }: { post: BlogPost; index: number }) {
           )}
         </div>
 
-        <h3 className="text-xl md:text-2xl font-display font-black text-brand-black mb-6 group-hover:text-brand-blue transition-colors leading-[1.1] tracking-tight line-clamp-2">
+        <h3 className="text-xl md:text-2xl font-display font-black text-brand-black mb-4 group-hover:text-brand-blue transition-colors leading-[1.1] tracking-tight line-clamp-2">
           {post.title}
         </h3>
+
+        {/* Sectors & Services Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {post.target_sectors?.slice(0, 2).map((s: any) => (
+            <span key={s.id} className="text-[9px] font-bold uppercase tracking-wider bg-soft-gray text-text-gray px-2 py-1 rounded-md border border-border-gray">
+              #{s.name.replace(/\s+/g, '')}
+            </span>
+          ))}
+          {post.related_services?.slice(0, 2).map((s: any) => (
+            <span key={s.id} className="text-[9px] font-bold uppercase tracking-wider bg-brand-blue/5 text-brand-blue px-2 py-1 rounded-md border border-brand-blue/10">
+              #{s.title.replace(/\s+/g, '')}
+            </span>
+          ))}
+        </div>
         
         {/* Problem/Solution Preview */}
         <div className="space-y-4 mb-10 flex-1">
@@ -103,7 +117,7 @@ function InsightCard({ post, index }: { post: BlogPost; index: number }) {
               <div className="w-9 h-9 rounded-xl bg-soft-gray border border-border-gray flex items-center justify-center shrink-0">
                  <Target size={18} className="text-amber-600" />
               </div>
-              <p className="text-sm text-text-gray font-medium leading-relaxed italic line-clamp-2 italic">
+              <p className="text-sm text-text-gray font-medium leading-relaxed italic line-clamp-2">
                  {post.excerpt || "Analyzing technical barriers to digital efficiency."}
               </p>
            </div>
