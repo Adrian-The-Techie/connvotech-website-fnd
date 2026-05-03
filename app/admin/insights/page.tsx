@@ -85,16 +85,27 @@ export default function AdminBlogPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const payload = { ...formData };
+      
+      // Only send scheduled_at if status is 'scheduled'
+      if (payload.status !== 'scheduled') {
+        (payload as any).scheduled_at = null;
+      } else if (!payload.scheduled_at) {
+        alert('Please select a date and time for scheduled posts.');
+        return;
+      }
+
       if (editingItem) {
-        await api.patch(`/admin/blog/${editingItem.slug}/`, formData);
+        await api.patch(`/admin/blog/${editingItem.slug}/`, payload);
       } else {
-        await api.post('/admin/blog/', formData);
+        await api.post('/admin/blog/', payload);
       }
       setIsModalOpen(false);
       setEditingItem(null);
-      setFormData({ title: '', category: 'General', body: '', status: 'draft', scheduled_at: '', target_sectors: [], related_services: [] });
+      setFormData({ title: '', category: 'Insights', body: '', status: 'draft', scheduled_at: '', target_sectors: [], related_services: [] });
       fetchData();
-    } catch (err) {
+    } catch (err: any) {
+      console.error(err.response?.data);
       alert('Failed to save post. Ensure all required fields are filled.');
     }
   };
