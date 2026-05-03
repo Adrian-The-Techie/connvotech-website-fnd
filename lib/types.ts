@@ -69,6 +69,9 @@ export interface BlogPost {
   };
   status: string;
   published_at: string;
+  scheduled_at: string;
+  target_sectors: number[];
+  related_services: string[];
   created_at: string;
 }
 

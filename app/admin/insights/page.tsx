@@ -33,7 +33,7 @@ export default function AdminBlogPage() {
     related_services: [] as string[],
   });
 
-  const fetchData = async (pageNum = 1) => {
+  const fetchData = React.useCallback(async (pageNum = 1) => {
     setLoading(true);
     try {
       const activeFilters = Object.fromEntries(
@@ -49,7 +49,7 @@ export default function AdminBlogPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   const fetchDependencies = async () => {
     try {
@@ -70,7 +70,7 @@ export default function AdminBlogPage() {
 
   useEffect(() => {
     fetchData(page);
-  }, [page, filters]);
+  }, [page, fetchData]);
 
   const handleDelete = async (slug: string) => {
     if (!confirm('Are you sure you want to delete this blog post?')) return;
@@ -363,7 +363,7 @@ export default function AdminBlogPage() {
                       </div>
                       <div className="text-sm text-blue-800/60 max-w-xs">
                         <p className="font-medium">Automation will handle the rest.</p>
-                        <p className="text-xs mt-1">The post will automatically transition to 'Published' and trigger social media at the chosen time.</p>
+                        <p className="text-xs mt-1">The post will automatically transition to &apos;Published&apos; and trigger social media at the chosen time.</p>
                       </div>
                     </div>
                   </div>
