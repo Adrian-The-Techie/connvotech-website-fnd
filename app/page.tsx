@@ -38,7 +38,8 @@ export default async function HomePage() {
     services = s;
     portfolio = p;
     testimonials = t;
-    blogPosts = b;
+    // Filter out tech news from the insights section on home page
+    blogPosts = (b.results || b).filter((post: any) => post.category !== 'Tech News');
     
     // Ensure siteSettings is valid
     if (!siteSettings) throw new Error("No site settings found");
@@ -76,7 +77,7 @@ export default async function HomePage() {
       <ProductsSection />
       <PortfolioSection projects={portfolio?.results || []} />
       <TestimonialsSection testimonials={testimonials?.results || testimonials || []} />
-      <InsightsSection posts={blogPosts?.results || []} />
+      <InsightsSection posts={blogPosts || []} />
       <ContactSection />
     </div>
   );

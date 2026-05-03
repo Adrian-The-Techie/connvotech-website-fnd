@@ -26,13 +26,17 @@ export default function ContactSection({ hideHeading = false }: { hideHeading?: 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [services, setServices] = useState<any[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
 
   useEffect(() => {
-    getSiteSettings().then(setSettings).catch(console.error);
+    import('@/lib/api').then(api => {
+      api.getSiteSettings().then(setSettings).catch(console.error);
+      api.getServices().then(data => setServices(data.results || data)).catch(console.error);
+    });
   }, []);
 
   const onSubmit = async (data: ContactFormData) => {
@@ -134,12 +138,9 @@ export default function ContactSection({ hideHeading = false }: { hideHeading?: 
                     className="w-full bg-white border border-border-gray rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition-all appearance-none cursor-pointer font-medium"
                   >
                     <option value="">Select a service...</option>
-                    <option value="Web Development">Web Development</option>
-                    <option value="System Development">System Development</option>
-                    <option value="ICT Consultancy">ICT Consultancy</option>
-                    <option value="UI/UX Design">UI/UX Design</option>
-                    <option value="Cloud Infrastructure">Cloud Infrastructure</option>
-                    <option value="Digital Marketing">Digital Marketing</option>
+                    {services.map(s => (
+                      <option key={s.id} value={s.title}>{s.title}</option>
+                    ))}
                   </select>
                   {errors.service_interest && <p className="text-red-500 text-xs mt-1">{errors.service_interest.message}</p>}
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api from '@/lib/api';
+import { getBlogPosts } from '@/lib/api';
 import { BlogPost } from '@/lib/types';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -14,18 +14,18 @@ export default function NewsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/blog/?category=Tech News').then(res => {
-      setNews(res.data.results || res.data);
+    getBlogPosts({ category: 'Tech News' }).then(res => {
+      setNews(res.results || res);
       setLoading(false);
     });
   }, []);
 
   return (
     <div className="bg-white min-h-screen">
-      <PageHeader 
+      <PageHeader
         badge="Daily Tech Pulse"
         title={<>Global <span className="text-gradient">ICT & Tech</span> News</>}
-        subtitle="Stay updated with AI-curated news and insights from the global tech landscape, optimized for the African market."
+        subtitle="Stay updated with tech news and insights from the global tech landscape, optimized for global future alignments."
       />
       <div className="max-w-7xl mx-auto px-6 pb-24">
 
@@ -37,8 +37,8 @@ export default function NewsPage() {
           </div>
         ) : news.length === 0 ? (
           <div className="text-center py-20 bg-gray-50 rounded-[40px] border border-dashed border-gray-200">
-             <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
-             <p className="text-gray-500 font-medium">No news updates yet. Check back later!</p>
+            <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500 font-medium">No news updates yet. Check back later!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -52,8 +52,8 @@ export default function NewsPage() {
               >
                 {/* Thumbnail */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={item.external_image_url && item.external_image_url.startsWith('http') ? item.external_image_url : getMediaUrl(item.cover_image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800')} 
+                  <img
+                    src={item.external_image_url && item.external_image_url.startsWith('http') ? item.external_image_url : getMediaUrl(item.cover_image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
@@ -74,7 +74,7 @@ export default function NewsPage() {
                       {item.title}
                     </h3>
                   </div>
-                  <Link 
+                  <Link
                     href={`/blog/${item.slug}`}
                     className="inline-flex items-center gap-2 text-brand-blue font-bold text-sm hover:underline mt-4"
                   >

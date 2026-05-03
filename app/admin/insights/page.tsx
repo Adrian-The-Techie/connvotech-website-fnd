@@ -25,7 +25,7 @@ export default function AdminBlogPage() {
   const [editingItem, setEditingItem] = useState<BlogPost | null>(null);
   const [formData, setFormData] = useState({
     title: '',
-    category: 'General',
+    category: 'Insights',
     body: '',
     status: 'draft',
     scheduled_at: '',
