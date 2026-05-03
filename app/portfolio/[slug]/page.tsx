@@ -153,24 +153,13 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
                     </a>
                   ) : (
                     <Link
-                      href="/contact?intent=inquiry"
+                      href={`/contact?intent=inquiry&type=service&id=${project.services?.[0]?.slug || 'custom'}&name=${encodeURIComponent(project.title)}`}
                       className="w-full bg-brand-black text-white py-4 rounded-xl flex items-center justify-center font-bold gap-3 shadow-premium-soft hover:shadow-glow hover:-translate-y-1 transition-all text-sm"
                     >
                       Inquire Similar
                       <ArrowRight size={18} />
                     </Link>
                   )}
-
-                  <div className="pt-4 border-t border-border-gray">
-                    <ShareButtons 
-                      title={project.title}
-                      url={typeof window !== 'undefined' ? window.location.href : ''}
-                      hashtags={[
-                        ...(project.target_sectors?.map(t => t.name) || []),
-                        ...(project.services?.map(s => s.title) || [])
-                      ]}
-                    />
-                  </div>
                  </div>
                </div>
             </div>

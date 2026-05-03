@@ -65,6 +65,8 @@ function ContactFormContent({ hideHeading }: { hideHeading?: boolean }) {
           ? `I am interested in ${name}. Please notify me when it is released and provide more details about the roadmap.`
           : intent === 'service'
           ? `I am interested in ${name}. I would like to discuss how this service can help my business and request a consultation.`
+          : intent === 'inquiry'
+          ? `I saw your work on ${name} and I am interested in a similar solution for my organization. I would like to discuss requirements and request a quote.`
           : `I am interested in requesting enterprise access for ${name}. I would like to schedule a demo and discuss implementation for my organization.`;
         setValue('message', prefilledMsg);
       }
