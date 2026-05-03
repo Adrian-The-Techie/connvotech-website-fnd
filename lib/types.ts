@@ -48,6 +48,7 @@ export interface Project {
   tags: Tag[];
   project_url?: string;
   is_featured: boolean;
+  status: 'development' | 'delivered';
   order: number;
 }
 

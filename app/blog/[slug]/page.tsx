@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
 import { Metadata } from 'next';
 import { getBlogPostBySlug } from '@/lib/api';
 import { BlogPost } from '@/lib/types';
+import ShareButtons from '@/components/ShareButtons';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post: BlogPost = await getBlogPostBySlug(params.slug).catch(() => null);
@@ -154,11 +155,11 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
                     <p className="font-bold text-brand-black">{post.author ? post.author.username : 'Connvotech Team'}</p>
                  </div>
               </div>
-              <div className="flex gap-2">
-                 <button className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-brand-blue transition-all">
-                    <Tag size={18} />
-                 </button>
-              </div>
+              <ShareButtons 
+                title={post.title}
+                url={typeof window !== 'undefined' ? window.location.href : ''}
+                hashtags={[post.category]}
+              />
            </div>
         </div>
       </div>

@@ -122,64 +122,47 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.4 }}
-        className="group relative bg-white rounded-[40px] overflow-hidden border border-border-gray hover:border-brand-blue/20 transition-all duration-500 shadow-premium-soft hover:shadow-premium-card hover:-translate-y-2 h-full flex flex-col"
+        className="group bg-white rounded-[40px] border border-border-gray p-3 shadow-premium-soft hover:shadow-premium-card transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
       >
-        <div className="relative h-72 w-full overflow-hidden shrink-0">
-          {/* Subtle Overlay */}
-          <div className="absolute inset-0 bg-brand-black/20 z-10 group-hover:bg-brand-blue/30 transition-colors duration-500"></div>
-          
-          {project.thumbnail ? (
+        <div className="relative h-64 rounded-[32px] overflow-hidden mb-8 shrink-0 bg-brand-bg flex items-center justify-center p-8">
+          {/* Background Image with blur overlay */}
+          {project.thumbnail && (
             <Image 
               src={getMediaUrl(project.thumbnail)} 
               alt={project.title} 
               fill 
-              className="object-cover group-hover:scale-110 transition-transform duration-1000" 
+              className="object-cover opacity-20 blur-[2px] transition-transform duration-1000 group-hover:scale-110" 
             />
-          ) : (
-            <div className="absolute inset-0 bg-soft-gray"></div>
           )}
-
-          {/* Client Logo Layer */}
-          <div className="absolute inset-0 z-20 flex items-center justify-center p-12">
+          
+          <div className="relative z-10 w-full h-full flex items-center justify-center">
             {displayLogo ? (
-              <div className="relative w-full h-full flex items-center justify-center">
-                 <img 
-                   src={getMediaUrl(displayLogo)} 
-                   alt={project.title} 
-                   className="max-w-[75%] max-h-[55%] object-contain drop-shadow-lg filter brightness-0 invert group-hover:scale-110 transition-all duration-700 ease-out opacity-90" 
-                 />
-              </div>
+              <img 
+                src={getMediaUrl(displayLogo)} 
+                alt={project.title} 
+                className="max-w-full max-h-full object-contain drop-shadow-xl filter brightness-0 transition-all duration-700 ease-out group-hover:scale-110" 
+              />
             ) : (
-              <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md bg-white/10">
-                 <div className="w-8 h-8 rounded-full bg-white/20 animate-pulse"></div>
+              <div className="w-16 h-16 rounded-full border border-brand-blue/20 flex items-center justify-center backdrop-blur-md bg-white/10">
+                 <div className="w-8 h-8 rounded-full bg-brand-blue/20 animate-pulse"></div>
               </div>
             )}
           </div>
-
-          {/* Hover Action */}
-          <div className="absolute inset-0 z-30 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-             <div className="w-full bg-primary-gradient text-white py-4 rounded-2xl flex items-center justify-center font-bold gap-2 transform translate-y-6 group-hover:translate-y-0 transition-all duration-500 shadow-premium-soft">
-               View Case Study
-               <ArrowRight size={18} />
-             </div>
-          </div>
         </div>
-        <div className="p-8 flex-1 flex flex-col">
-          <div className="flex gap-2 mb-4">
-            {project.tags.slice(0, 2).map(tag => (
-              <span key={tag.id} className="text-[10px] font-bold uppercase tracking-widest text-brand-blue px-3 py-1 bg-brand-blue/5 border border-brand-blue/10 rounded-full">
-                {tag.name}
-              </span>
-            ))}
+
+        <div className="px-5 pb-8 flex-1 flex flex-col items-center text-center">
+          <div className="mb-6">
+            <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border shadow-sm ${
+              project.status === 'development' 
+                ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+            }`}>
+              {project.status === 'development' ? 'In Development' : 'Delivered'}
+            </span>
           </div>
-          <h3 className="text-2xl font-display font-bold text-brand-black mb-3 group-hover:text-brand-blue transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-text-gray text-sm line-clamp-2 leading-relaxed font-medium mb-4">
-            {project.short_description}
-          </p>
-          <div className="mt-auto pt-4 flex items-center gap-2 text-brand-blue font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-            Discover Project <ArrowRight size={14} />
+          
+          <div className="mt-auto flex items-center gap-2 text-brand-blue font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            View Case Study <ArrowRight size={14} />
           </div>
         </div>
       </motion.div>
