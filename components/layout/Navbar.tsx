@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Laptop } from 'lucide-react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn, getMediaUrl } from '@/lib/utils';
 import { getSiteSettings } from '@/lib/api';
@@ -50,7 +51,12 @@ export default function Navbar() {
         <Link href="/" className="flex items-center space-x-3 group">
           {settings?.logo ? (
             <div className="h-12 w-auto relative transform group-hover:scale-105 transition-transform duration-500">
-               <img src={getMediaUrl(settings.logo)} alt={settings.company_name} className="h-full w-auto object-contain relative z-10" />
+               <Image 
+                 src={getMediaUrl(settings.logo)} 
+                 alt={settings.company_name} 
+                 fill
+                 className="object-contain relative z-10" 
+               />
             </div>
           ) : (
             <>

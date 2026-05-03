@@ -137,11 +137,14 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
           
           <div className="relative z-10 w-full h-full flex items-center justify-center">
             {displayLogo ? (
-              <img 
-                src={getMediaUrl(displayLogo)} 
-                alt={project.title} 
-                className="max-w-full max-h-full object-contain drop-shadow-xl filter brightness-0 transition-all duration-700 ease-out group-hover:scale-110" 
-              />
+              <div className="relative w-full h-full">
+                <Image 
+                  src={getMediaUrl(displayLogo)} 
+                  alt={project.title} 
+                  fill
+                  className="object-contain drop-shadow-xl filter brightness-0 transition-all duration-700 ease-out group-hover:scale-110" 
+                />
+              </div>
             ) : (
               <div className="w-16 h-16 rounded-full border border-brand-blue/20 flex items-center justify-center backdrop-blur-md bg-white/10">
                  <div className="w-8 h-8 rounded-full bg-brand-blue/20 animate-pulse"></div>

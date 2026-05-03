@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Calendar, Tag as TagIcon } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, Tag as TagIcon, ArrowRight } from 'lucide-react';
 import { Metadata } from 'next';
 import { getProjectBySlug } from '@/lib/api';
 import { Project } from '@/lib/types';
