@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
@@ -16,18 +17,48 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: post.title,
       description: post.summary || post.excerpt,
-      images: [post.external_image_url || (post.cover_image ? `${process.env.NEXT_PUBLIC_API_URL}${post.cover_image}` : '')].filter(Boolean),
+      images: [
+        post.external_image_url || 
+        (post.cover_image?.startsWith('http') ? post.cover_image : (post.cover_image ? `${process.env.NEXT_PUBLIC_API_URL}${post.cover_image}` : ''))
+      ].filter(Boolean),
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary || post.excerpt,
-      images: [post.external_image_url || (post.cover_image ? `${process.env.NEXT_PUBLIC_API_URL}${post.cover_image}` : '')].filter(Boolean),
+      images: [
+        post.external_image_url || 
+        (post.cover_image?.startsWith('http') ? post.cover_image : (post.cover_image ? `${process.env.NEXT_PUBLIC_API_URL}${post.cover_image}` : ''))
+      ].filter(Boolean),
     },
   };
 }
 
+const Mermaid = dynamic(() => import('@/components/Mermaid'), { ssr: false });
+
+const FormattedContent = ({ html }: { html: string }) => {
+  // Split content by mermaid blocks
+  const parts = html.split(/(<pre class="mermaid">[\s\S]*?<\/pre>)/);
+
+  return (
+    <div className="prose prose-lg prose-blue max-w-none text-gray-600 leading-relaxed space-y-6">
+      {parts.map((part, index) => {
+        if (part.startsWith('<pre class="mermaid">')) {
+          const chart = part
+            .replace(/<pre class="mermaid">/, '')
+            .replace(/<\/pre>/, '')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .trim();
+          return <Mermaid key={index} chart={chart} />;
+        }
+        return <div key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+      })}
+    </div>
+  );
+};
 
 export default async function BlogPostDetailPage({ params }: { params: { slug: string } }) {
   const post: BlogPost = await getBlogPostBySlug(params.slug).catch(() => null);
@@ -110,10 +141,7 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
 
       {/* Content */}
       <div className="max-w-3xl mx-auto px-6 pb-24">
-        <div 
-          className="prose prose-lg prose-blue max-w-none text-gray-600 leading-relaxed space-y-6"
-          dangerouslySetInnerHTML={{ __html: post.body }} 
-        />
+        <FormattedContent html={post.body} />
         
         <div className="mt-16 pt-8 border-t border-gray-100">
            <div className="flex items-center justify-between">
