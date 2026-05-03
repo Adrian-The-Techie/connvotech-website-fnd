@@ -17,16 +17,18 @@ const LEAD_STATUSES = {
 export default function AdminContactPage() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [selectedSubmission, setSelectedSubmission] = useState<ContactSubmission | null>(null);
   const [newNote, setNewNote] = useState('');
   const [interactionType, setInteractionType] = useState('note');
 
-  const fetchSubmissions = async () => {
+  const fetchSubmissions = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const data = await getAdminSubmissions();
-      const results = data.results || data;
-      setSubmissions(Array.isArray(results) ? results : []);
+      const data = await getAdminSubmissions({ page: pageNum });
+      setSubmissions(data.results || data);
+      setTotalCount(data.count || (data.results ? data.results.length : 0));
     } catch (err) {
       console.error(err);
     } finally {
@@ -35,8 +37,8 @@ export default function AdminContactPage() {
   };
 
   useEffect(() => {
-    fetchSubmissions();
-  }, []);
+    fetchSubmissions(page);
+  }, [page]);
 
   const openSubmission = async (id: string) => {
     try {
@@ -86,65 +88,90 @@ export default function AdminContactPage() {
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-display font-bold text-brand-black">Lead CRM</h1>
-            <p className="text-gray-500">Manage enquiries and potential clients.</p>
+            <p className="text-gray-500">Manage enquiries and potential clients. ({totalCount} total)</p>
           </div>
           <button 
-            onClick={fetchSubmissions}
+            onClick={() => fetchSubmissions(page)}
             className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-bold transition-all"
           >
-            Refresh Data
+            Refresh
           </button>
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-gray-100 bg-gray-50">
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Lead Info</th>
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 hidden md:table-cell">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {loading ? (
-                <tr>
-                   <td colSpan={2} className="px-6 py-10 text-center text-gray-400">Loading leads...</td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-100 bg-gray-50">
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Lead Info</th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 hidden md:table-cell">Status</th>
                 </tr>
-              ) : submissions.length === 0 ? (
-                <tr>
-                   <td colSpan={2} className="px-6 py-10 text-center text-gray-400">No leads found.</td>
-                </tr>
-              ) : submissions.map((sub) => (
-                <tr 
-                  key={sub.id} 
-                  onClick={() => openSubmission(sub.id)}
-                  className={cn(
-                  "cursor-pointer hover:bg-gray-50 transition-colors",
-                  !sub.is_read ? "bg-amber-50/10 border-l-4 border-amber-400" : "border-l-4 border-transparent",
-                  selectedSubmission?.id === sub.id && "bg-brand-blue/5 border-l-brand-blue"
-                )}>
-                  <td className="px-6 py-4">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="font-bold text-brand-black text-sm">{sub.full_name}</p>
-                        <p className="text-xs text-gray-500 truncate max-w-[200px]">{sub.service_interest}</p>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {loading ? (
+                  <tr>
+                    <td colSpan={2} className="px-6 py-10 text-center text-gray-400">Loading leads...</td>
+                  </tr>
+                ) : submissions.length === 0 ? (
+                  <tr>
+                    <td colSpan={2} className="px-6 py-10 text-center text-gray-400">No leads found.</td>
+                  </tr>
+                ) : submissions.map((sub) => (
+                  <tr 
+                    key={sub.id} 
+                    onClick={() => openSubmission(sub.id)}
+                    className={cn(
+                    "cursor-pointer hover:bg-gray-50 transition-colors",
+                    !sub.is_read ? "bg-amber-50/10 border-l-4 border-amber-400" : "border-l-4 border-transparent",
+                    selectedSubmission?.id === sub.id && "bg-brand-blue/5 border-l-brand-blue"
+                  )}>
+                    <td className="px-6 py-4">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <p className="font-bold text-brand-black text-sm">{sub.full_name}</p>
+                          <p className="text-xs text-gray-500 truncate max-w-[200px]">{sub.service_interest}</p>
+                        </div>
+                        {!sub.is_read && (
+                          <span className="w-2 h-2 rounded-full bg-amber-500 mt-1"></span>
+                        )}
                       </div>
-                      {!sub.is_read && (
-                        <span className="w-2 h-2 rounded-full bg-amber-500 mt-1"></span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 hidden md:table-cell">
-                     <span className={cn(
-                       "px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest whitespace-nowrap",
-                       (LEAD_STATUSES[sub.lead_status as keyof typeof LEAD_STATUSES] || LEAD_STATUSES.new).color
-                     )}>
-                       {(LEAD_STATUSES[sub.lead_status as keyof typeof LEAD_STATUSES] || LEAD_STATUSES.new).label}
-                     </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td className="px-6 py-4 hidden md:table-cell">
+                      <span className={cn(
+                        "px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest whitespace-nowrap",
+                        (LEAD_STATUSES[sub.lead_status as keyof typeof LEAD_STATUSES] || LEAD_STATUSES.new).color
+                      )}>
+                        {(LEAD_STATUSES[sub.lead_status as keyof typeof LEAD_STATUSES] || LEAD_STATUSES.new).label}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Pagination Controls */}
+          {totalCount > 10 && (
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+              <button 
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="text-xs font-bold uppercase tracking-widest text-brand-blue disabled:text-gray-300 transition-colors"
+              >
+                Previous
+              </button>
+              <span className="text-xs font-bold text-gray-400">
+                Page {page} of {Math.ceil(totalCount / 10)}
+              </span>
+              <button 
+                onClick={() => setPage(p => p + 1)}
+                disabled={page * 10 >= totalCount}
+                className="text-xs font-bold uppercase tracking-widest text-brand-blue disabled:text-gray-300 transition-colors"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

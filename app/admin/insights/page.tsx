@@ -9,6 +9,8 @@ import RichTextEditor from '@/components/admin/RichTextEditor';
 export default function AdminBlogPage() {
   const [data, setData] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<BlogPost | null>(null);
   const [formData, setFormData] = useState({
@@ -18,11 +20,12 @@ export default function AdminBlogPage() {
     status: 'draft',
   });
 
-  const fetchData = async () => {
+  const fetchData = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const res = await api.get('/admin/blog/');
+      const res = await api.get('/admin/blog/', { params: { page: pageNum } });
       setData(res.data.results || res.data);
+      setTotalCount(res.data.count || (res.data.results ? res.data.results.length : 0));
     } catch (err) {
       console.error(err);
     } finally {
@@ -31,8 +34,8 @@ export default function AdminBlogPage() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(page);
+  }, [page]);
 
   const handleDelete = async (slug: string) => {
     if (!confirm('Are you sure you want to delete this blog post?')) return;
@@ -82,7 +85,7 @@ export default function AdminBlogPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-display font-bold text-brand-black">Blog & News</h1>
-          <p className="text-gray-500 text-sm mt-1">Manage manual posts and AI-generated drafts.</p>
+          <p className="text-gray-500 text-sm mt-1">Manage manual posts and AI-generated drafts. ({totalCount} total)</p>
         </div>
         <button 
           onClick={() => { setEditingItem(null); setIsModalOpen(true); }}
@@ -159,6 +162,29 @@ export default function AdminBlogPage() {
           </tbody>
         </table>
         </div>
+
+        {/* Pagination Controls */}
+        {totalCount > 10 && (
+          <div className="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+            <button 
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="text-xs font-bold uppercase tracking-widest text-brand-blue disabled:text-gray-300 transition-colors"
+            >
+              Previous
+            </button>
+            <span className="text-xs font-bold text-gray-400">
+              Page {page} of {Math.ceil(totalCount / 10)}
+            </span>
+            <button 
+              onClick={() => setPage(p => p + 1)}
+              disabled={page * 10 >= totalCount}
+              className="text-xs font-bold uppercase tracking-widest text-brand-blue disabled:text-gray-300 transition-colors"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Modal */}
