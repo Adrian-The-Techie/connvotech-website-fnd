@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mail, Phone, MapPin, Clock, Linkedin, Twitter, Facebook, Instagram, Package, Settings, ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { submitContactForm, getProducts, getServices, getSiteSettings } from '@/lib/api';
 import { SiteSettings, Product } from '@/lib/types';
@@ -16,9 +17,7 @@ const contactSchema = z.object({
   company: z.string().optional(),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
-  interest_type: z.enum(['product', 'service'], {
-    required_error: "Please select an interest type",
-  }),
+  interest_type: z.enum(['product', 'service']),
   interest_id: z.string().min(1, "Please select an item"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });

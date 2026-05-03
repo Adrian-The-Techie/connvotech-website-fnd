@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
@@ -16,20 +16,20 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  const next = () => {
+  const next = useCallback(() => {
     setDirection(1);
     setIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
-  const prev = () => {
+  const prev = useCallback(() => {
     setDirection(-1);
     setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [next]);
 
   const variants = {
     enter: (direction: number) => ({
