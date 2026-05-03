@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { Product } from '@/lib/types';
 import { Plus, Edit, Trash2, X, Check, Loader2, Package, ExternalLink, Cpu } from 'lucide-react';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 export default function AdminProductsPage() {
   const [data, setData] = useState<Product[]>([]);
@@ -21,6 +22,7 @@ export default function AdminProductsPage() {
     demo_url: '',
     price_starting_at: '',
     is_active: true,
+    is_coming_soon: false,
   });
 
   const fetchData = async () => {
@@ -67,7 +69,7 @@ export default function AdminProductsPage() {
       setFormData({ 
         name: '', tagline: '', description: '', features: '', 
         tech_stack: '', image_url: '', demo_url: '', 
-        price_starting_at: '', is_active: true 
+        price_starting_at: '', is_active: true, is_coming_soon: false
       });
       fetchData();
     } catch (err) {
@@ -87,6 +89,7 @@ export default function AdminProductsPage() {
       demo_url: item.demo_url || '',
       price_starting_at: item.price_starting_at || '',
       is_active: item.is_active,
+      is_coming_soon: item.is_coming_soon,
     });
     setIsModalOpen(true);
   };
@@ -114,6 +117,7 @@ export default function AdminProductsPage() {
               <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Product</th>
               <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Tech Stack</th>
               <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Price</th>
+              <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Roadmap</th>
               <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Status</th>
               <th className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 text-right">Actions</th>
             </tr>
@@ -152,6 +156,11 @@ export default function AdminProductsPage() {
                 </td>
                 <td className="px-8 py-4">
                    <p className="font-bold text-brand-blue">${item.price_starting_at}</p>
+                </td>
+                <td className="px-8 py-4">
+                   <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${item.is_coming_soon ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                     {item.is_coming_soon ? 'Coming Soon' : 'Live'}
+                   </span>
                 </td>
                 <td className="px-8 py-4">
                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${item.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
@@ -214,11 +223,9 @@ export default function AdminProductsPage() {
 
                 <div className="space-y-2">
                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Description</label>
-                   <textarea 
+                   <RichTextEditor 
                      value={formData.description}
-                     onChange={e => setFormData({...formData, description: e.target.value})}
-                     className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue outline-none transition-all h-32"
-                     required
+                     onChange={content => setFormData({...formData, description: content})}
                    />
                 </div>
 
@@ -275,14 +282,25 @@ export default function AdminProductsPage() {
                    </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
-                   <input 
-                     type="checkbox"
-                     checked={formData.is_active}
-                     onChange={e => setFormData({...formData, is_active: e.target.checked})}
-                     className="w-5 h-5 accent-brand-blue"
-                   />
-                   <label className="text-sm font-bold text-brand-black">Visible to Public</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-gray-50 rounded-2xl">
+                   <div className="flex items-center gap-3">
+                      <input 
+                        type="checkbox"
+                        checked={formData.is_active}
+                        onChange={e => setFormData({...formData, is_active: e.target.checked})}
+                        className="w-5 h-5 accent-brand-blue"
+                      />
+                      <label className="text-sm font-bold text-brand-black">Visible to Public</label>
+                   </div>
+                   <div className="flex items-center gap-3">
+                      <input 
+                        type="checkbox"
+                        checked={formData.is_coming_soon}
+                        onChange={e => setFormData({...formData, is_coming_soon: e.target.checked})}
+                        className="w-5 h-5 accent-amber-500"
+                      />
+                      <label className="text-sm font-bold text-brand-black">Mark as Coming Soon</label>
+                   </div>
                 </div>
 
                 <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-gray-100">

@@ -53,7 +53,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
             </div>
             Back to Portfolio
           </Link>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[0.9]">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black mb-8 tracking-tighter leading-[0.9]">
             {project.title}
           </h1>
           <div className="flex flex-wrap justify-center gap-3">
@@ -84,10 +84,10 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
                </div>
             </div>
 
-            <div className="prose prose-xl prose-slate max-w-none">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black mb-10 tracking-tighter">Project Overview</h2>
+            <div className="prose prose-lg prose-slate max-w-none">
+              <h2 className="text-xl md:text-2xl font-display font-black text-brand-black mb-8 tracking-tighter">Project Overview</h2>
               <div 
-                className="text-text-gray font-medium leading-[1.8]"
+                className="text-text-gray font-medium leading-[1.7] text-base"
                 dangerouslySetInnerHTML={{ __html: project.long_description }} 
               />
             </div>
@@ -95,8 +95,8 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
 
           {/* Sidebar */}
           <div className="lg:col-span-4 space-y-10">
-            <div className="bg-brand-bg p-10 rounded-[48px] border border-border-gray shadow-premium-card sticky top-32">
-               <h3 className="text-2xl font-display font-black text-brand-black mb-10 tracking-tight border-b border-border-gray pb-6">Project Details</h3>
+            <div className="bg-brand-bg p-8 rounded-[40px] border border-border-gray shadow-premium-card sticky top-32">
+               <h3 className="text-xl font-display font-black text-brand-black mb-8 tracking-tight border-b border-border-gray pb-4">Project Details</h3>
                <div className="space-y-8">
                  <div className="flex gap-4">
                     <div className="w-10 h-10 rounded-xl bg-white border border-border-gray flex items-center justify-center text-brand-blue shadow-premium-soft">

@@ -55,16 +55,16 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group p-8 rounded-3xl border border-border-gray bg-white hover:border-brand-blue/20 hover:shadow-premium-card transition-all duration-300 flex flex-col justify-between"
+      className="group p-6 rounded-3xl border border-border-gray bg-white hover:border-brand-blue/20 hover:shadow-premium-card transition-all duration-300 flex flex-col justify-between"
     >
       <div>
-        <div className="w-14 h-14 bg-soft-gray rounded-2xl flex items-center justify-center text-brand-blue group-hover:bg-primary-gradient group-hover:text-white transition-all mb-6">
-          <Icon size={28} />
+        <div className="w-12 h-12 bg-soft-gray rounded-2xl flex items-center justify-center text-brand-blue group-hover:bg-primary-gradient group-hover:text-white transition-all mb-6">
+          <Icon size={24} />
         </div>
-        <h3 className="text-2xl font-display font-bold text-brand-black mb-4 group-hover:text-brand-blue transition-colors">
+        <h3 className="text-xl font-display font-bold text-brand-black mb-4 group-hover:text-brand-blue transition-colors">
           {service.title}
         </h3>
-        <p className="text-text-gray leading-relaxed font-medium">
+        <p className="text-text-gray/80 text-sm leading-loose font-medium">
           {service.short_description}
         </p>
       </div>

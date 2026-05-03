@@ -36,43 +36,54 @@ export default async function ProductsPage() {
             >
               {/* Product Visual */}
               <div className="flex-1 w-full">
-                <div className="relative aspect-[16/10] rounded-[48px] overflow-hidden shadow-premium-card border border-border-gray group bg-white p-3">
-                   <div className="relative w-full h-full rounded-[36px] overflow-hidden">
-                    {product.image_url ? (
-                      <Image 
-                        src={product.image_url} 
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-soft-gray flex items-center justify-center">
-                         <Cpu className="text-slate-300" size={64} />
-                      </div>
-                    )}
-                   </div>
-                  <div className="absolute top-8 left-8">
-                     <span className="bg-white/80 backdrop-blur-md text-brand-black text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-white/20 shadow-premium-soft">
-                        {product.tech_stack}
-                     </span>
+                <Link href={`/products/${product.slug}`} className="block">
+                  <div className="relative aspect-[16/10] rounded-[48px] overflow-hidden shadow-premium-card border border-border-gray group bg-white p-3">
+                     <div className="relative w-full h-full rounded-[36px] overflow-hidden">
+                      {product.image_url ? (
+                        <Image 
+                          src={product.image_url} 
+                          alt={product.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-soft-gray flex items-center justify-center">
+                           <Cpu className="text-slate-300" size={64} />
+                        </div>
+                      )}
+                     </div>
+                    <div className="absolute top-8 left-8 flex gap-2">
+                       {product.is_coming_soon ? (
+                          <span className="bg-amber-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg animate-pulse border border-white/20">
+                            Coming Soon
+                          </span>
+                       ) : (
+                          <span className="bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg border border-white/20">
+                            Live Now
+                          </span>
+                       )}
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
 
               {/* Product Info */}
               <div className="flex-1 space-y-10">
-                <div className="space-y-4">
-                   <p className="text-[10px] font-black text-brand-blue uppercase tracking-[0.3em]">
-                      {product.tagline}
-                   </p>
-                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-brand-black leading-[0.9] tracking-tighter">
-                      {product.name}
-                   </h2>
-                </div>
+                 <div className="space-y-4">
+                    <p className="text-[10px] font-black text-brand-blue uppercase tracking-[0.3em]">
+                       {product.tagline}
+                    </p>
+                    <Link href={`/products/${product.slug}`}>
+                      <h2 className="text-xl md:text-2xl lg:text-3xl font-display font-black text-brand-black leading-[0.9] tracking-tighter hover:text-brand-blue transition-colors">
+                         {product.name}
+                      </h2>
+                    </Link>
+                 </div>
 
-                <p className="text-xl text-text-gray leading-relaxed font-medium">
-                   {product.description}
-                </p>
+                <div 
+                  className="text-lg text-text-gray leading-relaxed font-medium prose-sm max-w-none line-clamp-3"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                    {product.features_list.map((feature, fidx) => (
@@ -85,20 +96,19 @@ export default async function ProductsPage() {
                    ))}
                 </div>
 
-                <div className="flex flex-wrap gap-4 pt-6">
-                   <button className="bg-primary-gradient text-white px-10 py-5 rounded-2xl font-bold flex items-center gap-3 shadow-premium-soft hover:shadow-glow hover:-translate-y-1 transition-all">
-                      Request Enterprise Access <ChevronRight size={18} />
-                   </button>
-                   {product.demo_url && (
-                     <a 
-                      href={product.demo_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-10 py-5 rounded-2xl border border-border-gray font-bold text-text-gray flex items-center gap-3 hover:bg-soft-gray transition-all shadow-premium-soft bg-white"
-                     >
-                        View Live Demo <ExternalLink size={18} />
-                     </a>
-                   )}
+                <div className="flex flex-col gap-3 pt-6 w-full max-w-md">
+                    <Link 
+                      href={`/products/${product.slug}`}
+                      className="px-8 py-4 rounded-2xl border border-border-gray font-bold text-text-gray flex items-center justify-center gap-2 hover:bg-soft-gray transition-all shadow-premium-soft bg-white text-xs uppercase tracking-widest whitespace-nowrap"
+                    >
+                       View More <ExternalLink size={16} className="shrink-0" />
+                    </Link>
+                    <Link 
+                      href={`/contact?type=product&id=${product.slug || product.id}&name=${encodeURIComponent(product.name)}&intent=${product.is_coming_soon ? 'notify' : 'access'}`}
+                      className={`${product.is_coming_soon ? 'bg-brand-black' : 'bg-primary-gradient'} text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-premium-soft hover:shadow-glow hover:-translate-y-1 transition-all text-xs uppercase tracking-widest whitespace-nowrap`}
+                    >
+                       {product.is_coming_soon ? 'Get Notified' : 'Request Access'} <ChevronRight size={18} className="shrink-0" />
+                    </Link>
                 </div>
               </div>
             </div>
@@ -116,8 +126,8 @@ export default async function ProductsPage() {
                 Our products are just the beginning. We also build bespoke solutions tailored specifically to your unique workflow.
               </p>
               <Link 
-                href="/contact"
-                className="inline-flex items-center gap-3 bg-primary-gradient text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all shadow-premium-soft hover:shadow-glow hover:-translate-y-1"
+                href={`/contact?type=service&id=bespoke-solution&name=Bespoke+Consultation&intent=service`}
+                className="bg-primary-gradient text-white px-12 py-6 rounded-2xl text-xl font-black transition-all shadow-premium-soft hover:shadow-glow hover:-translate-y-1 relative z-10"
               >
                 Schedule a Consultation <ChevronRight size={24} />
               </Link>

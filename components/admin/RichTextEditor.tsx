@@ -26,13 +26,13 @@ const modules = {
 
 export default function RichTextEditor({ value, onChange }: RichTextEditorProps) {
   return (
-    <div className="bg-white rounded-xl overflow-hidden">
+    <div className="bg-gray-50 border border-gray-100 rounded-xl overflow-hidden focus-within:border-brand-blue transition-all">
       <ReactQuill 
         theme="snow"
         value={value}
         onChange={onChange}
         modules={modules}
-        className="h-64 mb-12"
+        className="h-64 mb-12 bg-white"
       />
     </div>
   );

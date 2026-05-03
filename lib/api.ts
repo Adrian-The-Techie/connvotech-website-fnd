@@ -60,6 +60,7 @@ export const getBlogPosts = (params?: any) =>
 export const getBlogPostBySlug = (slug: string) => api.get(`/blog/${slug}/`).then(res => res.data);
 export const getTestimonials = () => api.get('/testimonials/').then(res => res.data);
 export const getProducts = () => api.get('/products/').then(res => res.data);
+export const getProductBySlug = (slug: string) => api.get(`/products/${slug}/`).then(res => res.data);
 export const submitContactForm = (data: any) => api.post('/contact/', data).then(res => res.data);
 
 // Admin functions

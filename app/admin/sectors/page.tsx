@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { Plus, Trash2, X, Check, Loader2, Target, Info } from 'lucide-react';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface Sector {
   id: number;
@@ -152,14 +153,12 @@ export default function AdminSectorsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Strategy Description</label>
-                  <textarea 
-                    placeholder="Briefly describe the focus..."
-                    value={formData.description}
-                    onChange={e => setFormData({...formData, description: e.target.value})}
-                    className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue outline-none transition-all h-24"
-                  />
-                </div>
+                   <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Strategy Description</label>
+                   <RichTextEditor 
+                     value={formData.description}
+                     onChange={content => setFormData({...formData, description: content})}
+                   />
+                 </div>
                 
                 <button 
                   type="submit"

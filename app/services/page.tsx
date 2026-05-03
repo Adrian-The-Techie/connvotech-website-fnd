@@ -68,7 +68,7 @@ export default async function ServicesPage() {
                  </p>
               </div>
               <Link 
-                href="/contact"
+                href="/contact?type=service&id=tech-audit&name=Tech+Audit&intent=service"
                 className="bg-white text-brand-black px-12 py-6 rounded-2xl text-xl font-bold hover:bg-brand-black hover:text-white transition-all whitespace-nowrap shadow-premium-soft"
               >
                  Book a Tech Audit

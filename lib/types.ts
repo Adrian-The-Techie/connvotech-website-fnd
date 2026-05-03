@@ -101,6 +101,7 @@ export interface Product {
   demo_url: string;
   price_starting_at: string;
   is_active: boolean;
+  is_coming_soon: boolean;
 }
 
 export interface LeadInteraction {
