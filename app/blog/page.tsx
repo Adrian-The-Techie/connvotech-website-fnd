@@ -16,6 +16,7 @@ export default function BlogPage() {
   const [filters, setFilters] = useState({
     sector: '',
     service: '',
+    category: '',
   });
 
   useEffect(() => {
@@ -28,10 +29,10 @@ export default function BlogPage() {
   useEffect(() => {
     setLoading(true);
     getBlogPosts({ 
-      category: 'Insights', 
       page, 
       target_sectors: filters.sector,
-      related_services: filters.service
+      related_services: filters.service,
+      category: filters.category
     }).then(data => {
       setPosts(data.results || data);
       setTotalCount(data.count || (data.results ? data.results.length : 0));
@@ -73,9 +74,19 @@ export default function BlogPage() {
              {services.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}
            </select>
 
-           {(filters.sector || filters.service) && (
+           <select 
+             value={filters.category}
+             onChange={e => { setFilters({...filters, category: e.target.value}); setPage(1); }}
+             className="bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-brand-blue transition-all"
+           >
+             <option value="">All Categories</option>
+             <option value="Insights">Insights</option>
+             <option value="Tech News">Tech News</option>
+           </select>
+
+           {(filters.sector || filters.service || filters.category) && (
              <button 
-               onClick={() => { setFilters({ sector: '', service: '' }); setPage(1); }}
+               onClick={() => { setFilters({ sector: '', service: '', category: '' }); setPage(1); }}
                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-red-500 hover:text-red-600 ml-auto"
              >
                <X size={14} /> Clear
