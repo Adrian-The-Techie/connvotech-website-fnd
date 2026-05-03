@@ -124,45 +124,56 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
         transition={{ duration: 0.4 }}
         className="group bg-white rounded-[40px] border border-border-gray p-3 shadow-premium-soft hover:shadow-premium-card transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
       >
-        <div className="relative h-64 rounded-[32px] overflow-hidden mb-8 shrink-0 bg-brand-bg flex items-center justify-center p-8">
-          {/* Background Image with blur overlay */}
-          {project.thumbnail && (
+        <div className="relative h-64 rounded-[32px] overflow-hidden mb-8 shrink-0 bg-brand-bg flex items-center justify-center">
+          {/* Main Thumbnail Image */}
+          {project.thumbnail ? (
             <Image 
               src={getMediaUrl(project.thumbnail)} 
               alt={project.title} 
               fill 
-              className="object-cover opacity-20 blur-[2px] transition-transform duration-1000 group-hover:scale-110" 
+              className="object-cover transition-transform duration-1000 group-hover:scale-110" 
             />
+          ) : (
+            <div className="absolute inset-0 bg-soft-gray"></div>
           )}
           
-          <div className="relative z-10 w-full h-full flex items-center justify-center">
-            {displayLogo ? (
+          {/* Client Logo Overlay (Subtle) */}
+          {displayLogo && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center p-16 bg-brand-black/10 group-hover:bg-brand-black/20 transition-colors duration-500">
               <div className="relative w-full h-full">
                 <Image 
                   src={getMediaUrl(displayLogo)} 
                   alt={project.title} 
                   fill
-                  className="object-contain drop-shadow-xl filter brightness-0 transition-all duration-700 ease-out group-hover:scale-110" 
+                  className="object-contain filter brightness-0 invert drop-shadow-2xl transition-all duration-700 ease-out group-hover:scale-110 opacity-90" 
                 />
               </div>
+            </div>
+          )}
+
+          {/* Status Badge - Aligned with Product Listing Style */}
+          <div className="absolute top-4 right-4 z-20">
+            {project.status === 'development' ? (
+              <span className="bg-amber-500 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg border border-white/20">
+                In Development
+              </span>
             ) : (
-              <div className="w-16 h-16 rounded-full border border-brand-blue/20 flex items-center justify-center backdrop-blur-md bg-white/10">
-                 <div className="w-8 h-8 rounded-full bg-brand-blue/20 animate-pulse"></div>
-              </div>
+              <span className="bg-emerald-500 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg border border-white/20">
+                Delivered
+              </span>
             )}
           </div>
         </div>
 
-        <div className="px-5 pb-8 flex-1 flex flex-col items-center text-center">
-          <div className="mb-6">
-            <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border shadow-sm ${
-              project.status === 'development' 
-                ? 'bg-amber-50 text-amber-600 border-amber-100' 
-                : 'bg-emerald-50 text-emerald-600 border-emerald-100'
-            }`}>
-              {project.status === 'development' ? 'In Development' : 'Delivered'}
-            </span>
-          </div>
+        <div className="px-5 pb-8 flex-1 flex flex-col">
+          <h3 className="text-xl font-display font-bold text-brand-black mb-4 group-hover:text-brand-blue transition-colors leading-tight">
+            {project.title}
+          </h3>
+          
+          <div 
+            className="text-text-gray text-xs line-clamp-2 mb-8 font-medium leading-relaxed prose-sm"
+            dangerouslySetInnerHTML={{ __html: project.short_description }}
+          />
           
           <div className="mt-auto flex items-center gap-2 text-brand-blue font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             View Case Study <ArrowRight size={14} />
