@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, ExternalLink, Cpu, Zap, Check, ArrowRight, Clock } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { getProducts } from '@/lib/api';
 import { Product } from '@/lib/types';
 import { getMediaUrl } from '@/lib/utils';
 
 export default function ProductsSection() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -65,8 +67,9 @@ export default function ProductsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {products.map((product) => (
-            <div
+            <Link
               key={product.id}
+              href={`/products/${product.slug}`}
               className="group bg-white rounded-[40px] border border-border-gray p-3 shadow-premium-soft hover:shadow-premium-card transition-all duration-500 hover:-translate-y-2 flex flex-col"
             >
               <div className="relative h-64 rounded-[32px] overflow-hidden mb-8">
@@ -136,25 +139,31 @@ export default function ProductsSection() {
                 </div>
 
                 <div className="mt-auto flex flex-col gap-3">
-                  <Link
-                    href={`/contact?type=product&id=${product.slug || product.id}&name=${encodeURIComponent(product.name)}&intent=${product.is_coming_soon ? 'notify' : 'access'}`}
-                    className={`w-full ${product.is_coming_soon ? 'bg-brand-black text-white' : 'bg-primary-gradient text-white'} px-6 py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 shadow-premium-soft hover:shadow-glow transition-all whitespace-nowrap`}
+                  <div
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      router.push(`/contact?type=product&id=${product.slug || product.id}&name=${encodeURIComponent(product.name)}&intent=${product.is_coming_soon ? 'notify' : 'access'}`);
+                    }}
+                    className={`w-full ${product.is_coming_soon ? 'bg-brand-black text-white' : 'bg-primary-gradient text-white'} px-6 py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 shadow-premium-soft hover:shadow-glow transition-all whitespace-nowrap cursor-pointer z-30`}
                   >
                     {product.is_coming_soon ? 'Get Notified' : 'Request Access'} <ChevronRight size={16} />
-                  </Link>
+                  </div>
                   {product.demo_url && (
-                    <a
-                      href={product.demo_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full px-6 py-4 rounded-2xl border border-border-gray font-bold text-text-gray flex items-center justify-center gap-2 hover:bg-soft-gray transition-all shadow-premium-soft bg-white text-sm whitespace-nowrap"
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        window.open(product.demo_url, '_blank');
+                      }}
+                      className="w-full px-6 py-4 rounded-2xl border border-border-gray font-bold text-text-gray flex items-center justify-center gap-2 hover:bg-soft-gray transition-all shadow-premium-soft bg-white text-sm whitespace-nowrap cursor-pointer z-30"
                     >
                       View More <ExternalLink size={16} />
-                    </a>
+                    </div>
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

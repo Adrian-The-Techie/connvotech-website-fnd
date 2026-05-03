@@ -237,10 +237,10 @@ function ContactFormContent({ hideHeading }: { hideHeading?: boolean }) {
             <button 
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-primary-gradient text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all disabled:opacity-50 shadow-premium-soft hover:shadow-glow hover:-translate-y-1"
+              className="w-full bg-primary-gradient text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all disabled:opacity-50 shadow-premium-soft hover:shadow-glow hover:-translate-y-1 text-sm uppercase tracking-widest whitespace-nowrap"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
-              <Send size={20} />
+              <Send size={18} className="shrink-0" />
             </button>
           </form>
         )}

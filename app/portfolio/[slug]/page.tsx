@@ -84,10 +84,10 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
                </div>
             </div>
 
-            <div className="prose prose-lg prose-slate max-w-none">
+            <div className="prose prose-sm prose-slate max-w-none">
               <h2 className="text-xl md:text-2xl font-display font-black text-brand-black mb-8 tracking-tighter">Project Overview</h2>
               <div 
-                className="text-text-gray font-medium leading-[1.7] text-base"
+                className="text-text-gray font-medium leading-[1.8] text-sm"
                 dangerouslySetInnerHTML={{ __html: project.long_description }} 
               />
             </div>

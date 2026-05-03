@@ -80,7 +80,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${montserrat.variable} font-sans`}>
+      <body className={montserrat.className}>
         <ClientLayout>
           {children}
         </ClientLayout>
