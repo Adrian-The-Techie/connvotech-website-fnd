@@ -9,21 +9,29 @@ interface ShareButtonsProps {
   hashtags?: string[];
 }
 
-export default function ShareButtons({ title, url, hashtags = [] }: ShareButtonsProps) {
+export default function ShareButtons({ title, url: initialUrl, hashtags = [] }: ShareButtonsProps) {
+  const [url, setUrl] = React.useState(initialUrl || '');
+
+  React.useEffect(() => {
+    if (!url && typeof window !== 'undefined') {
+      setUrl(window.location.href);
+    }
+  }, [url]);
+
   const formattedHashtags = hashtags
     .map(tag => tag.replace(/\s+/g, ''))
     .map(tag => tag.startsWith('#') ? tag : `#${tag}`)
     .join(' ');
 
   const handleLinkedInShare = () => {
-    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-    // Note: LinkedIn doesn't support pre-filled text/hashtags in the simple share URL anymore, 
-    // but we can copy it to clipboard or provide a suggested post text.
+    const finalUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(finalUrl)}`;
     window.open(linkedinUrl, '_blank');
   };
 
   const handleTwitterShare = () => {
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${title}\n\n${formattedHashtags}`)}&url=${encodeURIComponent(url)}`;
+    const finalUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${title}\n\n${formattedHashtags}`)}&url=${encodeURIComponent(finalUrl)}`;
     window.open(twitterUrl, '_blank');
   };
 
@@ -46,10 +54,11 @@ export default function ShareButtons({ title, url, hashtags = [] }: ShareButtons
       </button>
       <button 
         onClick={() => {
+          const finalUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
           if (navigator.share) {
-            navigator.share({ title, url }).catch(console.error);
+            navigator.share({ title, url: finalUrl }).catch(console.error);
           } else {
-            navigator.clipboard.writeText(url);
+            navigator.clipboard.writeText(finalUrl);
             alert('Link copied to clipboard!');
           }
         }}
