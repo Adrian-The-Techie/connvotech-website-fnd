@@ -107,9 +107,25 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
                        <TagIcon size={18} />
                     </div>
                     <div>
-                       <p className="text-[10px] font-black uppercase tracking-widest text-text-gray mb-1">Industry / Category</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-text-gray mb-1">Industry / Sector</p>
                        <p className="font-bold text-brand-black leading-tight">
-                         {project.tags.map(t => t.name).join(', ')}
+                         {project.target_sectors?.length > 0 
+                           ? project.target_sectors.map(t => t.name).join(', ') 
+                           : 'Digital Infrastructure'}
+                       </p>
+                    </div>
+                 </div>
+
+                 <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-border-gray flex items-center justify-center text-brand-blue shadow-premium-soft">
+                       <ArrowRight size={18} />
+                    </div>
+                    <div>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-text-gray mb-1">Services Provided</p>
+                       <p className="font-bold text-brand-black leading-tight">
+                         {project.services?.length > 0 
+                           ? project.services.map(s => s.title).join(', ') 
+                           : 'Systems Development'}
                        </p>
                     </div>
                  </div>
@@ -149,7 +165,10 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
                     <ShareButtons 
                       title={project.title}
                       url={typeof window !== 'undefined' ? window.location.href : ''}
-                      hashtags={project.tags.map(t => t.name)}
+                      hashtags={[
+                        ...(project.target_sectors?.map(t => t.name) || []),
+                        ...(project.services?.map(s => s.title) || [])
+                      ]}
                     />
                   </div>
                  </div>

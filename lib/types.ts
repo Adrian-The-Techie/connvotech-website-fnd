@@ -37,6 +37,13 @@ export interface Tag {
   slug: string;
 }
 
+export interface Sector {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -46,6 +53,8 @@ export interface Project {
   thumbnail: string;
   client_logo: string;
   tags: Tag[];
+  target_sectors: Sector[];
+  services: Service[];
   project_url?: string;
   is_featured: boolean;
   status: 'development' | 'delivered';

@@ -137,15 +137,15 @@ function ProjectCard({ project, index, fallbackLogo }: { project: Project; index
             <div className="absolute inset-0 bg-soft-gray"></div>
           )}
           
-          {/* Client Logo Overlay (Subtle) */}
+          {/* Client Logo Overlay (Original Colors) */}
           {displayLogo && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center p-16 bg-brand-black/10 group-hover:bg-brand-black/20 transition-colors duration-500">
+            <div className="absolute inset-0 z-10 flex items-center justify-center p-16 group-hover:bg-white/10 transition-colors duration-500">
               <div className="relative w-full h-full">
                 <Image 
                   src={getMediaUrl(displayLogo)} 
                   alt={project.title} 
                   fill
-                  className="object-contain filter brightness-0 invert drop-shadow-2xl transition-all duration-700 ease-out group-hover:scale-110 opacity-90" 
+                  className="object-contain drop-shadow-2xl transition-all duration-700 ease-out group-hover:scale-110" 
                 />
               </div>
             </div>
