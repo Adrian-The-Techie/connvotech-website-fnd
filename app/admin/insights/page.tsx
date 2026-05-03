@@ -245,7 +245,7 @@ export default function AdminBlogPage() {
                   <p className="font-medium text-brand-black">{item.title}</p>
                   <div className="flex items-center gap-1.5 text-[10px] text-gray-400 uppercase tracking-widest mt-1">
                     <Calendar size={10} />
-                    {new Date(item.created_at).toLocaleDateString()}
+                    {new Date(item.created_at).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </td>
                 <td className="px-8 py-4">
