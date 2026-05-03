@@ -97,7 +97,7 @@ export interface Product {
   description: string;
   features_list: string[];
   tech_stack: string;
-  image_url: string;
+  image: string;
   demo_url: string;
   price_starting_at: string;
   is_active: boolean;

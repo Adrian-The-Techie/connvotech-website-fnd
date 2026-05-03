@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: product.name,
       description: product.tagline,
-      images: product.image_url ? [product.image_url] : [],
+      images: product.image ? [getMediaUrl(product.image)] : [],
       type: 'website',
     },
   };
@@ -79,9 +79,9 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           <div className="lg:col-span-8 space-y-12">
             <div className="relative aspect-video rounded-[40px] overflow-hidden shadow-premium-card border border-border-gray group bg-white p-2">
               <div className="relative w-full h-full rounded-[32px] overflow-hidden">
-                {product.image_url ? (
+                {product.image ? (
                   <Image
-                    src={getMediaUrl(product.image_url)}
+                    src={getMediaUrl(product.image)}
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

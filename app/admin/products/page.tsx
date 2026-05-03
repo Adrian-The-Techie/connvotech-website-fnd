@@ -18,7 +18,7 @@ export default function AdminProductsPage() {
     description: '',
     features: '', // We'll handle conversion in the UI
     tech_stack: '',
-    image_url: '',
+    image: null as File | string | null,
     demo_url: '',
     price_starting_at: '',
     is_active: true,
@@ -53,26 +53,42 @@ export default function AdminProductsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const submitData = {
-      ...formData,
-      price_starting_at: formData.price_starting_at === '' ? null : formData.price_starting_at
-    };
+    
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('tagline', formData.tagline);
+    data.append('description', formData.description);
+    data.append('features', formData.features);
+    data.append('tech_stack', formData.tech_stack);
+    data.append('demo_url', formData.demo_url);
+    data.append('price_starting_at', formData.price_starting_at === '' ? '' : formData.price_starting_at);
+    data.append('is_active', String(formData.is_active));
+    data.append('is_coming_soon', String(formData.is_coming_soon));
+
+    if (formData.image instanceof File) {
+      data.append('image', formData.image);
+    }
 
     try {
       if (editingItem) {
-        await api.patch(`/admin/products/${editingItem.slug}/`, submitData);
+        await api.patch(`/admin/products/${editingItem.slug}/`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
       } else {
-        await api.post('/admin/products/', submitData);
+        await api.post('/admin/products/', data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
       }
       setIsModalOpen(false);
       setEditingItem(null);
       setFormData({ 
         name: '', tagline: '', description: '', features: '', 
-        tech_stack: '', image_url: '', demo_url: '', 
+        tech_stack: '', image: null, demo_url: '', 
         price_starting_at: '', is_active: true, is_coming_soon: false
       });
       fetchData();
     } catch (err) {
+      console.error(err);
       alert('Failed to save product. Ensure all fields are valid.');
     }
   };
@@ -85,7 +101,7 @@ export default function AdminProductsPage() {
       description: item.description,
       features: item.features_list ? item.features_list.join('\n') : '',
       tech_stack: item.tech_stack,
-      image_url: item.image_url || '',
+      image: item.image || '',
       demo_url: item.demo_url || '',
       price_starting_at: item.price_starting_at || '',
       is_active: item.is_active,
@@ -263,13 +279,19 @@ export default function AdminProductsPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Cover Image URL</label>
+                      <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Thumbnail Image</label>
                       <input 
-                        value={formData.image_url}
-                        onChange={e => setFormData({...formData, image_url: e.target.value})}
-                        className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue outline-none transition-all"
-                        placeholder="https://images.unsplash.com/..."
+                        type="file"
+                        accept="image/*"
+                        onChange={e => {
+                          const file = e.target.files?.[0];
+                          if (file) setFormData({...formData, image: file});
+                        }}
+                        className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue outline-none transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-brand-blue/10 file:text-brand-blue hover:file:bg-brand-blue/20"
                       />
+                      {typeof formData.image === 'string' && formData.image && (
+                        <p className="text-[10px] text-gray-400 mt-1 truncate">Current: {formData.image}</p>
+                      )}
                    </div>
                    <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Demo URL</label>

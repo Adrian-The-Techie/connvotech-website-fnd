@@ -37,9 +37,9 @@ export default async function ProductsPage() {
               className="group bg-white rounded-[40px] border border-border-gray p-3 shadow-premium-soft hover:shadow-premium-card transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
             >
               <div className="relative h-64 rounded-[32px] overflow-hidden mb-8 shrink-0">
-                {product.image_url ? (
+                {product.image ? (
                   <Image
-                    src={getMediaUrl(product.image_url)}
+                    src={getMediaUrl(product.image)}
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
