@@ -75,6 +75,33 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href={faviconUrl} />
+        {/* Google Search Console Verification */}
+        {process.env.NEXT_PUBLIC_GSC_ID && (
+          <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GSC_ID} />
+        )}
+        
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

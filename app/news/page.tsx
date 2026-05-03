@@ -31,12 +31,12 @@ export default function NewsPage() {
 
   useEffect(() => {
     setLoading(true);
-    getBlogPosts({ 
-      page, 
-      target_sectors: filters.sector,
-      related_services: filters.service,
-      category: filters.category
-    }).then(data => {
+    const params: any = { page };
+    if (filters.category) params.category = filters.category;
+    if (filters.sector) params.target_sectors = filters.sector;
+    if (filters.service) params.related_services = filters.service;
+
+    getBlogPosts(params).then(data => {
       setNews(data.results || data);
       setTotalCount(data.count || (data.results ? data.results.length : 0));
       setLoading(false);

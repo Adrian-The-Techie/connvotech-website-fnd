@@ -1,44 +1,76 @@
-import { MetadataRoute } from 'next';
-import api from '@/lib/api';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://connvotech.com';
+import { MetadataRoute } from 'next'
+import { getServices, getProducts, getBlogPosts } from '@/lib/api'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const routes = [
-    '',
-    '/services',
-    '/portfolio',
-    '/blog',
-    '/contact',
-  ].map((route) => ({
-    url: `${SITE_URL}${route}`,
+  const baseUrl = 'https://connvotech.com'
+
+  // Fetch dynamic data
+  const [services, products, blogPosts] = await Promise.all([
+    getServices().catch(() => ({ results: [] })),
+    getProducts().catch(() => ({ results: [] })),
+    getBlogPosts().catch(() => ({ results: [] })),
+  ])
+
+  const serviceUrls = (services.results || []).map((s: any) => ({
+    url: `${baseUrl}/services/${s.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }));
+  }))
 
-  try {
-    // Fetch dynamic blog posts
-    const blogRes = await api.get('/blog/');
-    const blogPosts = (blogRes.data.results || []).map((post: any) => ({
-      url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: new Date(post.updated_at || post.created_at),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    }));
+  const productUrls = (products.results || []).map((p: any) => ({
+    url: `${baseUrl}/products/${p.slug}`,
+    lastModified: new Date(),
+  }))
 
-    // Fetch dynamic projects
-    const portfolioRes = await api.get('/portfolio/');
-    const projects = (portfolioRes.data.results || []).map((project: any) => ({
-      url: `${SITE_URL}/portfolio/${project.slug}`,
+  const blogUrls = (blogPosts.results || []).map((b: any) => ({
+    url: `${baseUrl}/blog/${b.slug}`,
+    lastModified: new Date(),
+  }))
+
+  return [
+    {
+      url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'daily',
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/products`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/portfolio`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/news`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
       priority: 0.6,
-    }));
-
-    return [...routes, ...blogPosts, ...projects];
-  } catch (error) {
-    console.error('Sitemap generation error:', error);
-    return routes;
-  }
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    ...serviceUrls,
+    ...productUrls,
+    ...blogUrls,
+  ]
 }
