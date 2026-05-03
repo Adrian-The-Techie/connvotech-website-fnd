@@ -123,9 +123,10 @@ export default function ProductsSection() {
                   {product.tagline}
                 </p>
 
-                <p className="text-text-gray text-sm line-clamp-2 mb-8 font-medium">
-                  {product.description}
-                </p>
+                <div 
+                  className="text-text-gray text-sm line-clamp-2 mb-8 font-medium prose-sm"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
 
                 <div className="space-y-3 mb-10">
                   {product.features_list?.slice(0, 3).map((feature, fidx) => (
