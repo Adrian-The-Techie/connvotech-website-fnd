@@ -155,7 +155,6 @@ export default async function BlogPostDetailPage({ params }: { params: { slug: s
                     <p className="font-bold text-brand-black">{post.author ? post.author.username : 'Connvotech Team'}</p>
                  </div>
               </div>
-              </div>
               <ShareButtons 
                 title={post.title}
                 url={typeof window !== 'undefined' ? window.location.href : ''}
