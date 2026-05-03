@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { Product } from '@/lib/types';
-import { Plus, Edit, Trash2, X, Check, Loader2, Package, ExternalLink, Cpu } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Check, Loader2, Package, ExternalLink, Cpu, Image as ImageIcon } from 'lucide-react';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import { getMediaUrl } from '@/lib/utils';
+import Image from 'next/image';
 
 export default function AdminProductsPage() {
   const [data, setData] = useState<Product[]>([]);
@@ -155,8 +157,17 @@ export default function AdminProductsPage() {
               <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
                 <td className="px-8 py-4">
                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-brand-blue/5 flex items-center justify-center text-brand-blue">
-                         <Package size={20} />
+                      <div className="w-12 h-12 rounded-xl bg-brand-blue/5 flex items-center justify-center text-brand-blue overflow-hidden border border-gray-100 shadow-sm relative">
+                         {item.image ? (
+                           <Image 
+                            src={getMediaUrl(item.image)} 
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                           />
+                         ) : (
+                           <Package size={20} />
+                         )}
                       </div>
                       <div>
                          <p className="font-bold text-brand-black">{item.name}</p>
@@ -278,20 +289,39 @@ export default function AdminProductsPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div className="space-y-2">
+                   <div className="space-y-4">
                       <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Thumbnail Image</label>
-                      <input 
-                        type="file"
-                        accept="image/*"
-                        onChange={e => {
-                          const file = e.target.files?.[0];
-                          if (file) setFormData({...formData, image: file});
-                        }}
-                        className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 text-brand-black focus:border-brand-blue outline-none transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-brand-blue/10 file:text-brand-blue hover:file:bg-brand-blue/20"
-                      />
-                      {typeof formData.image === 'string' && formData.image && (
-                        <p className="text-[10px] text-gray-400 mt-1 truncate">Current: {formData.image}</p>
-                      )}
+                      
+                      {/* Current Image Preview */}
+                      <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <div className="w-24 h-24 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-300 overflow-hidden relative shadow-inner">
+                          {formData.image ? (
+                            <Image 
+                              src={typeof formData.image === 'string' ? getMediaUrl(formData.image) : URL.createObjectURL(formData.image)}
+                              alt="Preview"
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <ImageIcon size={32} />
+                          )}
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-brand-blue">Current Thumbnail</p>
+                          <input 
+                            type="file"
+                            accept="image/*"
+                            onChange={e => {
+                              const file = e.target.files?.[0];
+                              if (file) setFormData({...formData, image: file});
+                            }}
+                            className="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-brand-blue/10 file:text-brand-blue hover:file:bg-brand-blue/20 transition-all cursor-pointer"
+                          />
+                          {typeof formData.image === 'string' && formData.image && (
+                            <p className="text-[10px] text-gray-400 truncate max-w-[200px]">File: {formData.image.split('/').pop()}</p>
+                          )}
+                        </div>
+                      </div>
                    </div>
                    <div className="space-y-2">
                       <label className="text-xs font-bold uppercase tracking-widest text-gray-400">Demo URL</label>
