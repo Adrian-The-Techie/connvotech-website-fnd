@@ -50,12 +50,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-3 group">
           {settings?.logo ? (
-            <div className="h-12 w-auto relative transform group-hover:scale-105 transition-transform duration-500">
+            <div className="relative transform group-hover:scale-105 transition-transform duration-500">
                <Image 
                  src={getMediaUrl(settings.logo)} 
-                 alt={settings.company_name} 
-                 fill
-                 className="object-contain relative z-10" 
+                 alt={settings.company_name || "Logo"} 
+                 width={180}
+                 height={48}
+                 className="h-12 w-auto object-contain relative z-10" 
+                 priority
                />
             </div>
           ) : (
