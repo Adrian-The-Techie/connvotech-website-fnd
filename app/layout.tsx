@@ -20,15 +20,23 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = settings?.seo_title || "Connvotech Solutions | ICT Consultancy Nairobi";
   const description = settings?.seo_description || "Bespoke ICT Solutions for Growing Enterprises. Web Development, System Development, Cloud Infrastructure, and more.";
   const logo = settings?.logo || "/logo.png";
+  const favicon = settings?.favicon || "/favicon.ico";
 
   return {
+    metadataBase: new URL('https://connvotech.com'),
     title,
     description,
+    icons: {
+      icon: favicon,
+      shortcut: favicon,
+      apple: favicon,
+    },
     openGraph: {
       title,
       description,
       images: [logo],
       type: 'website',
+      url: 'https://connvotech.com',
     },
     twitter: {
       card: 'summary_large_image',
@@ -50,7 +58,6 @@ export default async function RootLayout({
     console.error("Failed to fetch settings for layout", err);
   }
 
-  const faviconUrl = settings?.favicon || '/favicon.ico';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -74,7 +81,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href={faviconUrl} />
         {/* Google Search Console Verification */}
         {process.env.NEXT_PUBLIC_GSC_ID && (
           <meta name="google-site-verification" content={process.env.NEXT_PUBLIC_GSC_ID} />
